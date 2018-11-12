@@ -1,3 +1,4 @@
+import { UsersService } from './../../users.service';
 import { PostsService } from './../posts.service';
 import { NewlinePipe } from './../../newline.pipe';
 import { Post } from './../models/post.model';
@@ -12,13 +13,19 @@ export class PostItemComponent implements OnInit {
 
   @Input() post: Post;
 
-  constructor(private postsService: PostsService) { }
+  constructor(
+    private postsService: PostsService,
+    private usersService: UsersService) { }
 
   ngOnInit() {
   }
 
   onDelete(postId) {
     this.postsService.deletePost(postId);
+  }
+
+  getActiveUserId() {
+    return this.usersService.getActiveUserId();
   }
 
 

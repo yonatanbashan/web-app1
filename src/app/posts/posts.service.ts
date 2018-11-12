@@ -21,19 +21,25 @@ export class PostsService {
   private postsUpdated = new Subject<Post[]>();
   private serverAddress = this.connectionService.getServerAddress();
 
+  mapPosts = (postData) => {
+    return postData.posts.map(post => {
+      return {
+        title: post.title,
+        content: post.content,
+        creatorId: post.creator,
+        id: post._id
+      };
+    });
+  }
+
+  getUserPosts(username: string) {
+    return this.http.get<{message: string, posts: any}>(this.serverAddress + 'api/posts/user/' + username, {})
+    .pipe(map(this.mapPosts))
+  }
 
   getPosts() {
     this.http.post<{message: string, posts: any}>(this.serverAddress + 'api/posts', {})
-    .pipe(map((postData) => {
-      return postData.posts.map(post => {
-        return {
-          title: post.title,
-          content: post.content,
-          user: post.user,
-          id: post._id
-        };
-      });
-    }))
+    .pipe(map(this.mapPosts))
     .subscribe((posts) => {
       this.posts = posts;
       this.postsUpdated.next(this.posts);

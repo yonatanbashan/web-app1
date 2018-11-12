@@ -1,3 +1,4 @@
+import { FindComponent } from './find/find.component';
 import { AuthGuard } from './auth/auth.guard';
 import { UserSignupComponent } from './user-signup/user-signup.component';
 import { UserLoginComponent } from './user-login/user-login.component';
@@ -6,6 +7,7 @@ import { PostsComponent } from './posts/posts.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NewPostComponent } from './posts/new-post/new-post.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 const appRoutes: Routes = [
@@ -13,6 +15,8 @@ const appRoutes: Routes = [
   { path: 'new-post', component: NewPostComponent, canActivate: [AuthGuard] },
   { path: 'home', component: HomeComponent },
   { path: 'signup', component: UserSignupComponent },
+  { path: 'find', component: FindComponent },
+  { path: 'user/:username', component: UserProfileComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 

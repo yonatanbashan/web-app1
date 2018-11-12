@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="col-md-8 col-md-offset-2">
+    <br><br><br><br>
+    <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+      <p class="app-title-small">Find Users</p>
+    </div>
+    <br><hr><br>
+    <span *ngIf="!isLoading" class="text-center">
+      <div *ngFor="let user of users">
+        <a [routerLink]="['/user', user]">#{{ user }}</a>
+      </div>
+    </span>
+    <span *ngIf="isLoading">
+      <div class="center-container">
+        <app-spinner></app-spinner>
+      </div>
+    </span>
+    </div>
+  </div>

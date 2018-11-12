@@ -24,6 +24,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatCardModule, MatProgressSpinnerModule } from '@angular/material';
 import { SpinnerComponent } from './common/spinner/spinner.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { FindComponent } from './find/find.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import { SpinnerComponent } from './common/spinner/spinner.component';
     NewlinePipe,
     UserLoginComponent,
     UserSignupComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    UserProfileComponent,
+    FindComponent
   ],
   imports: [
     BrowserModule,

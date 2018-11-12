@@ -5,14 +5,14 @@ const checkAuth = require('../middleware/check-auth');
 const tokenDecode = require('../common/token-decode');
 
 const Post = require('../models/post');
+const User = require('../models/user');
 
 // Add new post
-router.post('new', checkAuth, (req, res, next) => {
-
+router.post('/new', checkAuth, (req, res, next) => {
   const post = new Post({
     title:  req.body.title,
     content: req.body.content,
-    userId: req.userData.userId
+    creator: req.userData.userId
   });
   post.save().then(createdPost => {
     res.status(201).json({
@@ -23,10 +23,36 @@ router.post('new', checkAuth, (req, res, next) => {
 
 });
 
-// Retrieve all posts by user
+// Retrieve all posts by specified user
+router.get('/user/:username', checkAuth, (req, res, next) => {
+
+  // Search the user's ID, and then search posts by this ID
+  User.findOne({ username: req.params.username })
+  .then((user) => {
+    Post.where({ creator: user._id })
+    .then(documents => {
+      res.status(200).json(
+        {
+          message: 'Posts by user ' + req.params.username + ' fetched successfully!',
+          posts: documents
+        }
+      );
+    });
+  })
+  .catch(() => {
+    res.status(404).json(
+      {
+        message: 'User not found!',
+      }
+    );
+  });
+
+});
+
+// Retrieve all posts by current user
 router.post('', checkAuth, (req, res, next) => {
 
-  Post.find({ userId: req.userData.userId })
+  Post.find({ creator: req.userData.userId })
   .then(documents => {
     res.status(200).json(
       {
@@ -41,9 +67,9 @@ router.post('', checkAuth, (req, res, next) => {
 router.delete('/:id', checkAuth, (req, res, next) => {
   Post.deleteOne({ _id: req.params.id})
     .then(() => {
-      console.log('Post with id ' + req.params.id + ' deleted!')
+      res.status(200).json({message: 'Post deleted!'});
     });
-  res.status(200).json({message: 'Post deleted!'});
+
 });
 
 

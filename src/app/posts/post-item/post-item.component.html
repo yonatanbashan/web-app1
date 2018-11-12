@@ -9,7 +9,7 @@
     <div class="col-md-10 col-md-offset-1">
       <div class="post-content" [innerHtml]="post.content | newline"></div>
       <br>
-      <button class="btn app-post-button" (click)="onDelete(post.id)">Delete</button>
+      <button class="btn app-post-button" (click)="onDelete(post.id)" *ngIf="post.creatorId === getActiveUserId()">Delete</button>
     </div>
   </div>
   <br>

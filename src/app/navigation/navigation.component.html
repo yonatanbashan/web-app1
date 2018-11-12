@@ -7,6 +7,7 @@
       <ul class="nav navbar-nav">
         <li routerLinkActive="active"><a routerLink="posts" *ngIf="activeUser !== null">Posts</a></li>
         <li routerLinkActive="active"><a routerLink="new-post" *ngIf="activeUser !== null">New Post</a></li>
+        <li routerLinkActive="active"><a routerLink="find" *ngIf="activeUser !== null">Find</a></li>
       </ul>
       <ul class="nav navbar-nav pull-right" *ngIf="activeUser === null">
         <li routerLinkActive="active"><a routerLink="signup">Sign Up</a></li>

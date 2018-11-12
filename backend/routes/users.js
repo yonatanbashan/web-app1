@@ -7,6 +7,19 @@ const User = require('../models/user');
 
 // User handling
 
+
+// Get all users
+router.get('', (req, res, next) => {
+  User.find()
+  .then(users => {
+    res.status(200).json({
+      message: 'Users fetched successfully!',
+      users: users
+    });
+  });
+});
+
+// Add new user
 router.post('/add', (req, res, next) => {
 
   bcrypt.hash(req.body.password, 10)

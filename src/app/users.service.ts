@@ -4,6 +4,8 @@ import { ConnectionService } from './connection.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as jwt_decode from 'jwt-decode';
+import { map } from 'rxjs/operators';
+
 
 @Injectable()
 export class UsersService {
@@ -58,6 +60,17 @@ export class UsersService {
 
   setActiveUser(username: string) {
     this.activeUser = username;
+  }
+
+  mapUsers = (userData) => {
+    return userData.users.map(user => {
+      return user.username;
+    });
+  }
+
+  getUsers() {
+    return this.http.get(this.serverAddress + 'api/users/')
+    .pipe(map(this.mapUsers))
   }
 
   getUser(username: string, password: string) {
