@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="col-md-8 col-md-offset-2 text-center">
+        <p class="app-title">Join Bloggism,</p>
+        <p class="app-subtitle">And immediately share your inner to the outer</p>
+        <hr>
+        <p class="app-subtitle-small">Please enter your username and password, and instantly join us!</p>
+    </div>
+  </div>
+<div class="container col-md-4 col-md-offset-4">
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <input
+      type="text"
+      name="username"
+      class="form-control"
+      placeholder="Username"
+      id="username"
+      formControlName="username"
+      (input)="onCheck()"
+      >
+
+    <span class="app-form-warning" *ngIf="checkTypedUserAlreadyExists()">Username already exists, please choose another username</span>
+    <span class="app-form-warning" *ngIf="!signupForm.get('username').valid && signupForm.get('username').touched">You must provide a valid username</span>
+    </div>
+
+    <br>
+    <div class="row">
+      <input
+      type="password"
+      rows="8"
+      name="password"
+      class="form-control new-post-content"
+      placeholder="Password"
+      id="password"
+      formControlName="password"
+      >
+    </div>
+    <br>
+    <div class="row">
+      <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="!signupForm.valid || checkTypedUserAlreadyExists()">
+        Join
+      </button>
+    </div>
+  </form>
+</div>

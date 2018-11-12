@@ -1,0 +1,5 @@
+.new-post-content {
+  resize: vertical;
+  max-height: 25em;
+  min-height: 10em;
+}

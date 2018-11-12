@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="col-md-8 col-md-offset-2">
+
+  <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <p class="app-title-small">Your Recent Posts</p>
+    <p class="app-subtitle-small">This is the list of your recent posts. You can edit them by clicking on the edit post button next to each post.</p>
+  </div>
+  <br>
+  <hr>
+  <br>
+  <span *ngIf="postsAvailable">
+  <app-post-item
+    *ngFor="let post of posts"
+    [post]=post>
+
+  </app-post-item>
+  </span>
+  <span *ngIf="!postsAvailable">
+    <div class="center-container">
+      <app-spinner></app-spinner>
+    </div>
+  </span>
+  </div>
+</div>

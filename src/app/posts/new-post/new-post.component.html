@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="text-center">
+    <div class="row app-title-small">
+      Create a new post
+    </div>
+    <div class="row app-subtitles-small">
+      Fill in the post details and publish
+    </div>
+  </div>
+  <br>
+  <form [formGroup]="addPostForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <input
+      type="text"
+      name="title"
+      class="form-control"
+      placeholder="Post title"
+      id="title"
+      formControlName="title"
+      >
+    <span class="app-form-warning" *ngIf="!addPostForm.get('title').valid && addPostForm.get('title').touched">You must provide a post title</span>
+    </div>
+
+    <br>
+    <div class="row">
+      <textarea
+      type="text"
+      rows="8"
+      name="content"
+      class="form-control new-post-content"
+      placeholder="Post content"
+      id="content"
+      formControlName="content"
+      >
+      </textarea>
+    </div>
+    <br>
+    <div class="row">
+      <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="!addPostForm.valid">
+        Post
+      </button>
+    </div>
+  </form>
+
+</div>

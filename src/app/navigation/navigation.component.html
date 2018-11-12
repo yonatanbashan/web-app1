@@ -1,0 +1,19 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div routerLinkActive="active" class="navbar-header">
+        <a routerLink="/" class="navbar-brand">Home</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li routerLinkActive="active"><a routerLink="posts" *ngIf="activeUser !== null">Posts</a></li>
+        <li routerLinkActive="active"><a routerLink="new-post" *ngIf="activeUser !== null">New Post</a></li>
+      </ul>
+      <ul class="nav navbar-nav pull-right" *ngIf="activeUser === null">
+        <li routerLinkActive="active"><a routerLink="signup">Sign Up</a></li>
+      </ul>
+      <ul class="nav navbar-nav pull-right" *ngIf="activeUser !== null">
+        <li><a style="cursor: pointer;" (click)="logout()">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>

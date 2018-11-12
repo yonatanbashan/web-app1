@@ -1,0 +1,62 @@
+<span *ngIf="getActiveUser() === null">
+  <span *ngIf="!isLoading">
+    <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+
+      <div class="row">
+        <input
+        type="text"
+        name="username"
+        class="form-control user-login-input"
+        placeholder="Username"
+        id="username"
+        formControlName="username"
+        >
+      <span class="app-form-warning" *ngIf="!signInForm.get('username').valid && signInForm.get('username').touched">You must provide a valid username</span>
+      </div>
+
+      <div class="row">
+        <input
+        type="password"
+        rows="8"
+        name="password"
+        class="form-control user-login-input"
+        placeholder="Password"
+        id="password"
+        formControlName="password"
+        >
+      </div>
+
+      <span class="app-form-warning" *ngIf="submitClicked && !isUserExist()">Username/password incorrect</span>
+
+      <div class="row">
+        <button
+        type="submit"
+        class="btn btn-primary app-button-margin"
+        [disabled]="!signInForm.valid">
+          Login
+        </button>
+        <button
+        type="button"
+        class="btn btn-primary app-button-margin"
+        (click)="onSignup()">
+          Sign Up
+        </button>
+      </div>
+    </form>
+  </span>
+  <span *ngIf="isLoading" class="center-container">
+    <app-spinner></app-spinner>
+  </span>
+</span>
+<span *ngIf="getActiveUser() !== null && !isLoading">
+    <p class="app-subtitle-small">Hello, {{ getActiveUser() }}! <br> Click 'posts' to see your posts.</p>
+  <button
+  type="button"
+  class="btn btn-primary"
+  (click)="onLogout()">
+    Logout
+  </button>
+</span>
+<span *ngIf="getActiveUser() !== null && isLoading" class="center-container">
+    <app-spinner></app-spinner>
+</span>
