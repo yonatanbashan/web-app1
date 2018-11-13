@@ -26,6 +26,7 @@ import { MatCardModule, MatProgressSpinnerModule } from '@angular/material';
 import { SpinnerComponent } from './common/spinner/spinner.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FindComponent } from './find/find.component';
+import { UsersService } from './users.service';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { FindComponent } from './find/find.component';
     PostsService,
     ConnectionService,
     AuthService,
+    UsersService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

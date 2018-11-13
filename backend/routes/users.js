@@ -8,8 +8,48 @@ const User = require('../models/user');
 
 // User handling
 
+// Add/remove follower to user
+router.put('/:username', checkAuth, (req, res, next) => {
 
-// Get all users
+  const followerId = req.userData.userId.toString();
+
+  if (req.body.type === 'follow') {
+
+    User.findOne( { username: req.params.username })
+    .then((targetUser) => {
+      if (!targetUser.followers.includes(followerId)) {
+        let newFollowers = targetUser.followers;
+        newFollowers.push(followerId);
+        User.findByIdAndUpdate( { _id: targetUser._id }, { followers: newFollowers })
+        .then((targetUser) => {
+          res.status(201).json({ message: 'Follower added successfully from ' + followerId + ' to ' + targetUser._id })
+        });
+      }
+    });
+
+  }
+
+  if (req.body.type === 'unfollow') {
+
+    User.findOne( { username: req.params.username })
+    .then((targetUser) => {
+      let newFollowers = targetUser.followers;
+      let index = newFollowers.indexOf(followerId);
+      if (index >= 0) {
+        newFollowers.splice(index, 1);
+        User.findByIdAndUpdate( { _id: targetUser._id }, { followers: newFollowers })
+        .then((targetUser) => {
+          res.status(201).json({ message: 'Follower removed successfully' })
+        });
+      } else {
+        res.status(201).json({ message: 'User was not following already!'})
+      }
+    });
+  }
+
+});
+
+// Get users by search
 router.post('/find', checkAuth, (req, res, next) => {
   let searchName = req.body.searchName;
   searchName = searchName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Avoid allowing user to perform regexp search
@@ -29,7 +69,8 @@ router.post('/add', (req, res, next) => {
   .then(hash => {
       const user = new User({
       username:  req.body.username,
-      password: hash
+      password: hash,
+      followers: []
     });
     user.save().then(createdUser => {
       const token = jwt.sign(

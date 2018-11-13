@@ -1,7 +1,6 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-signup',
@@ -12,9 +11,9 @@ export class UserSignupComponent implements OnInit {
 
   typedUserAlreadyExists = false;
 
-  constructor(private authService: AuthService,
-    private router: Router) { }
-    signupForm: FormGroup;
+  constructor(private authService: AuthService) { }
+
+  signupForm: FormGroup;
 
   ngOnInit() {
     this.signupForm = new FormGroup({
@@ -31,7 +30,7 @@ export class UserSignupComponent implements OnInit {
     this.authService.addUser(
       this.signupForm.value.username,
       this.signupForm.value.password);
-    this.router.navigate(['/']);
+
   }
 
   onCheck(username: string) {

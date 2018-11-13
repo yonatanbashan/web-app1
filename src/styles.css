@@ -56,9 +56,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   height: 100%;
 }
 
+.h-margin {
+  margin-left: 3%;
+  margin-right: 3%;
+}
+
+.v-margin {
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
 .column {
     flex-direction: column;
 }
+
 
 .content-center {
   display: flex;

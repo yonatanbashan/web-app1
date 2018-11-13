@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as jwt_decode from 'jwt-decode';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 
 @Injectable()
@@ -24,7 +25,8 @@ export class AuthService {
 
 
   constructor(private http: HttpClient,
-    private connectionService: ConnectionService) {}
+    private connectionService: ConnectionService,
+    private router: Router) {}
 
   decodeToken(token: string): any {
     try {
@@ -60,21 +62,6 @@ export class AuthService {
 
   setActiveUser(username: string) {
     this.activeUser = username;
-  }
-
-  mapUsers = (userData) => {
-    return userData.users.map(user => {
-      return user.username;
-    });
-  }
-
-  getUsers(name: string) {
-    const request = {
-      searchBy: 'name',
-      searchName: name
-    }
-    return this.http.post(this.serverAddress + 'api/users/find/', request)
-    .pipe(map(this.mapUsers))
   }
 
   signIn(username: string, password: string) {
@@ -139,6 +126,7 @@ export class AuthService {
     this.http
       .post<{message: string, token: string}>(this.serverAddress + 'api/users/add', authData)
       .subscribe((response) => {
+        this.router.navigate(['/']);
         this.signIn(username, password);
       });
 
