@@ -10,7 +10,7 @@ import { AuthService } from '../auth/auth.service';
 })
 export class NavigationComponent implements OnInit, OnDestroy {
 
-  constructor(private authService: AuthService,
+  constructor(protected authService: AuthService,
     private router: Router) { }
 
   activeUser: string = null;

@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 const postsRoutes = require('./routes/posts');
 const usersRoutes = require('./routes/users');
+const commentsRoutes = require('./routes/comments');
 
 // Instantiate express app
 const app = express();
@@ -43,6 +44,7 @@ app.use((req, res, next) => {
 
 app.use('/api/posts', postsRoutes);
 app.use('/api/users', usersRoutes);
+app.use('/api/comments', commentsRoutes);
 
 // This is the 'valid' way to export the express app
 module.exports = app;

@@ -4,40 +4,55 @@ const router = express.Router();
 const checkAuth = require('../middleware/check-auth');
 
 const Comment = require('../models/comment');
+const User = require('../models/user');
 
-router.post('new', checkAuth, (req, res, next) => {
+// Add a comment to post
+router.post('', checkAuth, (req, res, next) => {
 
-  const comment = new Comment({
-    content: req.body.content,
-    author: req.userData.userId,
-    relatedPost: req.body.postId
-  });
-  comment.save().then(createdComment => {
+  let username;
+
+  User.findOne({ _id: req.userData.userId })
+  .then((user) => {
+    username = user.username;
+  })
+  .then(() => {
+    const comment = new Comment({
+      content: req.body.content,
+      creatorId: req.userData.userId,
+      creatorName: username,
+      postId: req.body.postId
+    });
+    comment.save().then(() => {
+      res.status(201).json({ message: 'Comment added successfully!'});
+    });
+  })
+
+
+
+});
+
+// Get all comments of a specific post
+router.get('/post/:id', checkAuth, (req, res, next) => {
+
+  Comment.find({ postId: req.params.id }).then((comments) => {
     res.status(201).json({
-      message: 'Comment added successfully',
-      commentId: createdComment._id
+      message: 'Comment added successfully!',
+      comments: comments
     });
   });
 
 });
 
-router.get('/:postId', checkAuth, (req, res, next) => {
+// Delete a comment to post
+router.delete('/:id', checkAuth, (req, res, next) => {
 
-  Post.find({ relatedPost: req.params.postId })
-  const comment = new Comment({
-    content: req.body.content,
-    author: req.userData.userId,
-    relatedPost: req.body.postId
-  });
-  comment.save().then(createdComment => {
+  Comment.deleteOne({ _id: req.params.id }).then((result) => {
     res.status(201).json({
-      message: 'Comment added successfully',
-      commentId: createdComment._id
+      message: 'Comment deleted successfully!'
     });
   });
 
 });
-
 
 
 module.exports = router;

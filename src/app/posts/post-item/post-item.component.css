@@ -10,6 +10,19 @@
 }
 
 .post-hover {
-  background-color: rgb(252, 245, 231);
+  background-color: #eaebf5;
 }
+
+.post-item {
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.new-comment-input {
+  resize: none;
+  max-height: 25rem;
+  min-height: 1rem;
+  width: 60%;
+}
+
 

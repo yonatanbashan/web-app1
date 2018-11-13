@@ -1,24 +1,23 @@
 <div class="container">
-  <div class="col-md-8 col-md-offset-2">
+  <div class="row">
+    <div class="col-lg">
+      <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <p class="app-title-small">Your Posts</p>
+      </div>
+      <br>
+      <br>
+      <span *ngIf="postsAvailable">
+      <app-post-item
+        *ngFor="let post of posts"
+        [post]=post>
 
-  <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <br><br><br><br>
-    <p class="app-title-small">Your Posts</p>
-  </div>
-  <br>
-  <hr>
-  <br>
-  <span *ngIf="postsAvailable">
-  <app-post-item
-    *ngFor="let post of posts"
-    [post]=post>
-
-  </app-post-item>
-  </span>
-  <span *ngIf="!postsAvailable">
-    <div class="center-container">
-      <app-spinner></app-spinner>
+      </app-post-item>
+      </span>
+      <span *ngIf="!postsAvailable">
+        <div class="center-container">
+          <app-spinner></app-spinner>
+        </div>
+      </span>
     </div>
-  </span>
   </div>
 </div>

@@ -1,6 +1,6 @@
-import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
-import { Post } from './models/post.model';
+import { Post } from '../models/post.model';
+import { Comment } from '../models/comment.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -12,7 +12,8 @@ export class PostsService {
 
   constructor(
     private http: HttpClient,
-    private connectionService: ConnectionService
+    private connectionService: ConnectionService,
+    private authService: AuthService
   ) {}
 
   private posts: Post[];
@@ -83,6 +84,40 @@ export class PostsService {
         this.posts = updatedPosts;
         this.postsUpdated.next([...this.posts]);
       });
+  }
+
+  // Add comment to post
+  addComment(content: string, post: Post) {
+    const request = {
+      content: content,
+      postId: post.id
+    };
+    return this.http.post(this.serverAddress + 'api/comments', request);
+  }
+
+  mapComments = (commentData) => {
+    return commentData.comments.map(comment => {
+      return {
+        content: comment.content,
+        creatorId: comment.creatorId,
+        creatorName: comment.creatorName,
+        postId: comment.postId,
+        id: comment._id
+      };
+    });
+  }
+    // Add comment to post
+  getComments(post: Post) {
+    return this.http.get(this.serverAddress + 'api/comments/post/' + post.id)
+    .pipe(map(this.mapComments));
+  }
+
+  deleteComment(comment: Comment) {
+    // UI protection; Add also Post owner authorization to delete
+    if (comment.creatorId !== this.authService.getActiveUserId()) {
+      return;
+    }
+    return this.http.delete(this.serverAddress + 'api/comments/' + comment.id)
   }
 
 }

@@ -1,4 +1,4 @@
-import { Post } from './models/post.model';
+import { Post } from '../models/post.model';
 import { PostsService } from './posts.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';

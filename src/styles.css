@@ -27,6 +27,12 @@
   font-size: 13px;
 }
 
+.tiny-button {
+  height: 2rem;
+  font-size: 1rem;
+  padding: 0;
+}
+
 
 .app-button-margin {
   margin-right: 5%;
@@ -53,6 +59,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
+}
+
+.flex-container {
+  display: flex;
   height: 100%;
 }
 

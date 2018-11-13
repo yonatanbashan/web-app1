@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 const checkAuth = require('../middleware/check-auth');
-const tokenDecode = require('../common/token-decode');
 
 const Post = require('../models/post');
 const User = require('../models/user');
@@ -12,7 +11,8 @@ router.post('/new', checkAuth, (req, res, next) => {
   const post = new Post({
     title:  req.body.title,
     content: req.body.content,
-    creator: req.userData.userId
+    creator: req.userData.userId,
+    comments: []
   });
   post.save().then(createdPost => {
     res.status(201).json({
@@ -64,6 +64,9 @@ router.post('', checkAuth, (req, res, next) => {
 
 });
 
+
+// Delete post
+// TODO: implement deleting all related comments
 router.delete('/:id', checkAuth, (req, res, next) => {
   Post.deleteOne({ _id: req.params.id})
     .then(() => {

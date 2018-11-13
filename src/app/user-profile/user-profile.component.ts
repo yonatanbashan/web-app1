@@ -1,7 +1,7 @@
 import { PostsService } from './../posts/posts.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Post } from '../posts/models/post.model';
+import { Post } from '../models/post.model';
 
 @Component({
   selector: 'app-user-profile',
