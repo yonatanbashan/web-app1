@@ -1,6 +1,6 @@
 import { Subject } from 'rxjs';
-import { AuthData } from './auth/auth-data.model';
-import { ConnectionService } from './connection.service';
+import { AuthData } from './auth-data.model';
+import { ConnectionService } from '../connection.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as jwt_decode from 'jwt-decode';
@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 
 
 @Injectable()
-export class UsersService {
+export class AuthService {
 
 
   private serverAddress = this.connectionService.getServerAddress();
@@ -77,7 +77,7 @@ export class UsersService {
     .pipe(map(this.mapUsers))
   }
 
-  getUser(username: string, password: string) {
+  signIn(username: string, password: string) {
     const authData: AuthData = {
       username: username,
       password: password
@@ -139,7 +139,7 @@ export class UsersService {
     this.http
       .post<{message: string, token: string}>(this.serverAddress + 'api/users/add', authData)
       .subscribe((response) => {
-        this.getUser(username, password);
+        this.signIn(username, password);
       });
 
   }

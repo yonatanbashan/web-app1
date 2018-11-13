@@ -1,8 +1,8 @@
 import { Router } from '@angular/router';
-import { UsersService } from '../users.service';
+import { AuthService } from '../auth/auth.service';
 import { Post } from './models/post.model';
 import { HttpClient } from '@angular/common/http';
-import { Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConnectionService } from '../connection.service';
@@ -12,9 +12,7 @@ export class PostsService {
 
   constructor(
     private http: HttpClient,
-    private connectionService: ConnectionService,
-    private usersService: UsersService,
-    private router: Router
+    private connectionService: ConnectionService
   ) {}
 
   private posts: Post[];

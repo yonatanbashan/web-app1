@@ -1,6 +1,6 @@
-import { UsersService } from '../../users.service';
+import { AuthService } from '../../auth/auth.service';
 import { PostsService } from './../posts.service';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -14,9 +14,8 @@ export class NewPostComponent implements OnInit, OnDestroy {
 
   constructor(
     private postsService: PostsService,
-    private usersService: UsersService,
-    private router: Router,
-    private route: ActivatedRoute) { }
+    private authService: AuthService,
+    private router: Router) { }
   addPostForm: FormGroup;
 
   private isAuthSubs: Subscription;
@@ -26,7 +25,7 @@ export class NewPostComponent implements OnInit, OnDestroy {
       'title': new FormControl(null, Validators.required),
       'content': new FormControl(null),
     });
-    this.isAuthSubs = this.usersService.getAuthStatusListener().subscribe(isAuth => {
+    this.isAuthSubs = this.authService.getAuthStatusListener().subscribe(isAuth => {
       if (!isAuth) {
         this.router.navigate(['/']);
       }

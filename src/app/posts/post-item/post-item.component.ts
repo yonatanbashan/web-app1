@@ -1,6 +1,5 @@
-import { UsersService } from './../../users.service';
+import { AuthService } from '../../auth/auth.service';
 import { PostsService } from './../posts.service';
-import { NewlinePipe } from './../../newline.pipe';
 import { Post } from './../models/post.model';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -15,7 +14,7 @@ export class PostItemComponent implements OnInit {
 
   constructor(
     private postsService: PostsService,
-    private usersService: UsersService) { }
+    private authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -25,7 +24,7 @@ export class PostItemComponent implements OnInit {
   }
 
   getActiveUserId() {
-    return this.usersService.getActiveUserId();
+    return this.authService.getActiveUserId();
   }
 
 

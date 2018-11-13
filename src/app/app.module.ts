@@ -1,5 +1,5 @@
 import { AuthInterceptor } from './auth/auth-interceptor';
-import { UsersService } from './users.service';
+import { AuthService } from './auth/auth.service';
 import { NewlinePipe } from './newline.pipe';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule, Router } from '@angular/router';
@@ -56,7 +56,7 @@ import { FindComponent } from './find/find.component';
   providers: [
     PostsService,
     ConnectionService,
-    UsersService,
+    AuthService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

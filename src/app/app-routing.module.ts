@@ -15,8 +15,8 @@ const appRoutes: Routes = [
   { path: 'new-post', component: NewPostComponent, canActivate: [AuthGuard] },
   { path: 'home', component: HomeComponent },
   { path: 'signup', component: UserSignupComponent },
-  { path: 'find', component: FindComponent },
-  { path: 'user/:username', component: UserProfileComponent },
+  { path: 'find', component: FindComponent, canActivate: [AuthGuard] },
+  { path: 'user/:username', component: UserProfileComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 

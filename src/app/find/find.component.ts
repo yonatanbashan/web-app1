@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { UsersService } from './../users.service';
+import { AuthService } from '../auth/auth.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
@@ -13,7 +13,7 @@ export class FindComponent implements OnInit {
   @ViewChild('findInput') findInput: ElementRef;
 
   constructor(
-    private usersService: UsersService
+    private authService: AuthService
   ) { }
 
   users: string[] = [];
@@ -40,7 +40,7 @@ export class FindComponent implements OnInit {
     }
     this.isLoading = true;
     const searchName = this.findInput.nativeElement.value;
-    this.searchSubs = this.usersService.getUsers(searchName)
+    this.searchSubs = this.authService.getUsers(searchName)
     .subscribe((response) => {
       this.updateUsers(response);
     });

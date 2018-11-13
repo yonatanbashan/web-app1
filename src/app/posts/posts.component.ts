@@ -2,7 +2,7 @@ import { Post } from './models/post.model';
 import { PostsService } from './posts.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { UsersService } from '../users.service';
+import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,7 +19,7 @@ export class PostsComponent implements OnInit, OnDestroy {
 
   constructor(
     private postsService: PostsService,
-    private usersService: UsersService,
+    private authService: AuthService,
     private router: Router
     ) { }
 
@@ -31,7 +31,7 @@ export class PostsComponent implements OnInit, OnDestroy {
     });
     this.postsService.getPosts();
 
-    this.isAuthSubs = this.usersService.getAuthStatusListener().subscribe(isAuth => {
+    this.isAuthSubs = this.authService.getAuthStatusListener().subscribe(isAuth => {
       if (!isAuth) {
         this.router.navigate(['/']);
       }

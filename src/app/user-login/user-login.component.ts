@@ -1,6 +1,6 @@
-import { UsersService } from '../users.service';
+import { AuthService } from '../auth/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
@@ -16,7 +16,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
   isLoading = false;
 
   constructor(
-    private usersService: UsersService,
+    private authService: AuthService,
     private router: Router) { }
     signInForm: FormGroup;
 
@@ -25,7 +25,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
       'username': new FormControl(null, Validators.required),
       'password': new FormControl(null, Validators.minLength(6)),
     });
-    this.isAuthSubs = this.usersService.getAuthStatusListener().subscribe((isAuth) => {
+    this.isAuthSubs = this.authService.getAuthStatusListener().subscribe((isAuth) => {
       this.isLoading = false;
     });
   }
@@ -35,15 +35,15 @@ export class UserLoginComponent implements OnInit, OnDestroy {
   }
 
   getActiveUser() {
-    return this.usersService.getActiveUser();
+    return this.authService.getActiveUser();
   }
 
   isUserExist() {
-    return this.usersService.isUserExist();
+    return this.authService.isUserExist();
   }
 
   onSubmit() {
-    this.usersService.getUser(
+    this.authService.signIn(
             this.signInForm.value.username,
             this.signInForm.value.password);
     this.submitClicked = true;
@@ -51,7 +51,7 @@ export class UserLoginComponent implements OnInit, OnDestroy {
   }
 
   onLogout() {
-    this.usersService.logout();
+    this.authService.logout();
   }
 
   onSignup() {

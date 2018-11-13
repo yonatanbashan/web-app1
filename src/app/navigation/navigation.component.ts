@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UsersService } from '../users.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-navigation',
@@ -10,18 +10,18 @@ import { UsersService } from '../users.service';
 })
 export class NavigationComponent implements OnInit, OnDestroy {
 
-  constructor(private usersService: UsersService,
+  constructor(private authService: AuthService,
     private router: Router) { }
 
   activeUser: string = null;
   private isAuthSubs: Subscription;
 
   ngOnInit() {
-    this.activeUser = this.usersService.getActiveUser();
-    this.isAuthSubs = this.usersService.getAuthStatusListener().subscribe(isAuth => {
-      this.activeUser = this.usersService.getActiveUser();
+    this.activeUser = this.authService.getActiveUser();
+    this.isAuthSubs = this.authService.getAuthStatusListener().subscribe(isAuth => {
+      this.activeUser = this.authService.getActiveUser();
     });
-    this.usersService.autoAuthUser();
+    this.authService.autoAuthUser();
   }
 
   ngOnDestroy() {
@@ -33,7 +33,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    this.usersService.logout();
+    this.authService.logout();
     this.router.navigate(['/']);
   }
 
