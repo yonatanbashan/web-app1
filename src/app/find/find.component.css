@@ -4,3 +4,11 @@
   font-weight: bolder;
   color: #3366FF;
 }
+
+.user-find-input {
+  width: 60%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  align-self: center;
+}
+

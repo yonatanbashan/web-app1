@@ -60,3 +60,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     flex-direction: column;
 }
 
+.content-center {
+  display: flex;
+}
+
+
+

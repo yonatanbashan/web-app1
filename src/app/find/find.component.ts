@@ -1,5 +1,6 @@
+import { Subscription } from 'rxjs';
 import { UsersService } from './../users.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-find',
@@ -8,20 +9,40 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FindComponent implements OnInit {
 
+
+  @ViewChild('findInput') findInput: ElementRef;
+
   constructor(
     private usersService: UsersService
   ) { }
 
   users: string[] = [];
   isLoading: boolean;
+  searchSubs: Subscription;
 
   ngOnInit() {
-    this.isLoading = true;
-    this.usersService.getUsers()
-    .subscribe((response) => {
-      this.users = response;
-      this.users.sort();
+  }
+
+  updateUsers(users) {
+    this.users = users;
+    this.users.sort();
+    this.isLoading = false;
+  }
+
+  onFindInput() {
+    if (this.searchSubs) {
+      this.searchSubs.unsubscribe(); // Remove old subscriptions which didn't execute yet, since a new letter was typed
+    }
+    if (this.findInput.nativeElement.value === '') {
       this.isLoading = false;
+      this.users = [];
+      return;
+    }
+    this.isLoading = true;
+    const searchName = this.findInput.nativeElement.value;
+    this.searchSubs = this.usersService.getUsers(searchName)
+    .subscribe((response) => {
+      this.updateUsers(response);
     });
   }
 

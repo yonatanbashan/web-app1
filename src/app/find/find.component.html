@@ -1,8 +1,16 @@
 <div class="container">
     <div class="col-md-8 col-md-offset-2">
     <br><br><br><br>
-    <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto content-center column text-center">
       <p class="app-title-small">Find Users</p>
+      <input
+      type="text"
+      name="find"
+      class="form-control user-find-input"
+      placeholder="find..."
+      (input)="onFindInput()"
+      #findInput
+      >
     </div>
     <br><hr><br>
     <span *ngIf="!isLoading" class="text-center">

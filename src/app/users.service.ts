@@ -68,8 +68,12 @@ export class UsersService {
     });
   }
 
-  getUsers() {
-    return this.http.get(this.serverAddress + 'api/users/')
+  getUsers(name: string) {
+    const request = {
+      searchBy: 'name',
+      searchName: name
+    }
+    return this.http.post(this.serverAddress + 'api/users/find/', request)
     .pipe(map(this.mapUsers))
   }
 

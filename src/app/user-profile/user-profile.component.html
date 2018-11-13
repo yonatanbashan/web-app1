@@ -16,7 +16,7 @@
 
   </app-post-item>
   </span>
-  <span *ngIf="posts.length === 0">
+  <span *ngIf="posts.length === 0 && !isLoading">
     User has no posts!
   </span>
   <span *ngIf="error">

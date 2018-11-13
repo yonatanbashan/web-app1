@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
+const checkAuth = require('../middleware/check-auth');
 
 const User = require('../models/user');
 
@@ -9,8 +10,10 @@ const User = require('../models/user');
 
 
 // Get all users
-router.get('', (req, res, next) => {
-  User.find()
+router.post('/find', checkAuth, (req, res, next) => {
+  let searchName = req.body.searchName;
+  searchName = searchName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Avoid allowing user to perform regexp search
+  User.find({ username: { $regex: `${searchName}`, $options: "si" } })
   .then(users => {
     res.status(200).json({
       message: 'Users fetched successfully!',
