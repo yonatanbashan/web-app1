@@ -10,24 +10,50 @@
   </span>
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
-
-      <span *ngIf="fullDisplay">
+      <span *ngIf="fullDisplay && ! isLoadingComments">
         <br>
-        <textarea type="text" placeholder="add a comment..." class="new-comment-input" rows="2" #commentInput></textarea>
+        <form [formGroup]="commentForm" (ngSubmit)="onSubmitComment()">
+          <textarea
+            *ngIf="canComment()"
+            type="text"
+            placeholder="add a comment..."
+            class="form-control new-comment-input"
+            rows="2"
+            id="content"
+            name="content"
+            formControlName="content"></textarea>
+            <button
+              class="btn btn-info"
+              type="submit"
+              [disabled]="!commentForm.valid"
+              *ngIf="canComment()">
+              Comment</button>
+              <button
+              class="btn app-post-button"
+              (click)="onDelete(post.id)"
+              *ngIf="post.creatorId === getActiveUserId()">
+              Delete Post</button>
+        </form>
         <br>
-        <div class="col-md-4 flex-sm-row">
-          <button class="btn btn-info" (click)="addComment()">Comment</button>
-          <button class="btn app-post-button" (click)="onDelete(post.id)" *ngIf="post.creatorId === getActiveUserId()">Delete Post</button>
-        </div>
-        <br><br>
+        <span class="app-subtitle" *ngIf="comments.length > 0">
+            Comments:
+            <br><br>
+        </span>
         <div *ngFor="let comment of comments">
           <div class="flex-container">
           <a [routerLink]="['/user', comment.creatorName]">#{{ comment.creatorName }}:</a>
           <div class="h-margin post-content" [innerHtml]="comment.content | newline"></div>
-          <button class="btn btn-info tiny-button" (click)="deleteComment(comment)">Delete</button>
+          <button
+            class="btn btn-info tiny-button"
+            (click)="deleteComment(comment)"
+            *ngIf="comment.creatorId === getActiveUserId() || post.creatorId === getActiveUserId()">
+            Delete</button>
         </div>
           <br>
         </div>
+      </span>
+      <span *ngIf="isLoadingComments">
+        <app-spinner></app-spinner>
       </span>
     </div>
   </div>

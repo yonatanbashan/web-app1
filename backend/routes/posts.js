@@ -5,6 +5,7 @@ const checkAuth = require('../middleware/check-auth');
 
 const Post = require('../models/post');
 const User = require('../models/user');
+const Comment = require('../models/comment');
 
 // Add new post
 router.post('/new', checkAuth, (req, res, next) => {
@@ -66,13 +67,15 @@ router.post('', checkAuth, (req, res, next) => {
 
 
 // Delete post
-// TODO: implement deleting all related comments
 router.delete('/:id', checkAuth, (req, res, next) => {
-  Post.deleteOne({ _id: req.params.id})
-    .then(() => {
+  //console.log(req.body);
+  Comment.deleteMany( { postId: req.params.id })
+  .then(() => {
+    return Post.deleteOne({ _id: req.params.id });
+  })
+  .then(() => {
       res.status(200).json({message: 'Post deleted!'});
-    });
-
+  });
 });
 
 

@@ -61,21 +61,19 @@ export class FindComponent implements OnInit {
 
   followUser(user: User, index: number) {
     this.pending[index] = true;
-    this.usersService.followUser(user.username)
+    this.usersService.followUser(user.id)
     .subscribe(() => {
       this.users[index].followers.push(this.authService.getActiveUserId());
       this.pending[index] = false;
-      console.log(this.users);
     })
   }
 
   unfollowUser(user: User, index: number) {
     this.pending[index] = true;
-    this.usersService.unfollowUser(user.username)
+    this.usersService.unfollowUser(user.id)
     .subscribe(() => {
       this.users[index].followers.splice(this.users[index].followers.indexOf(this.authService.getActiveUserId()), 1);
       this.pending[index] = false;
-      console.log(this.users);
     })
   }
 

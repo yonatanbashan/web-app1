@@ -27,6 +27,10 @@ export class UsersService {
     });
   }
 
+  getUser(name: string) {
+    return this.http.get(this.serverAddress + 'api/users/' + name);
+  }
+
   getUsers(name: string) {
     const request = {
       searchBy: 'name',
@@ -36,18 +40,18 @@ export class UsersService {
     .pipe(map(this.mapUsers))
   }
 
-  followUser(targetUsername: string) {
+  followUser(userId: string) {
     const request = {
       type: 'follow'
     }
-    return this.http.put<{message: string, posts: any}>(this.serverAddress + 'api/users/' + targetUsername, request)
+    return this.http.put<{message: string, posts: any}>(this.serverAddress + 'api/users/' + userId, request)
   }
 
-  unfollowUser(targetUsername: string) {
+  unfollowUser(userId: string) {
     const request = {
       type: 'unfollow'
     }
-    return this.http.put<{message: string, posts: any}>(this.serverAddress + 'api/users/' + targetUsername, request)
+    return this.http.put<{message: string, posts: any}>(this.serverAddress + 'api/users/' + userId, request)
   }
 
   // Checks whether a given user is followed by current user

@@ -8,42 +8,54 @@ const User = require('../models/user');
 
 // User handling
 
+
+// Fetch single user
+router.get('/:username', checkAuth, (req, res, next) => {
+  User.findOne( { username: req.params.username })
+  .then((user) => {
+    res.status(201).json({
+      message: 'User fetched successfully!',
+      user: user
+    });
+  });
+});
+
 // Add/remove follower to user
-router.put('/:username', checkAuth, (req, res, next) => {
+router.put('/:id', checkAuth, (req, res, next) => {
 
   const followerId = req.userData.userId.toString();
 
   if (req.body.type === 'follow') {
 
-    User.findOne( { username: req.params.username })
+    User.findOne( { _id: req.params.id })
     .then((targetUser) => {
       if (!targetUser.followers.includes(followerId)) {
         let newFollowers = targetUser.followers;
         newFollowers.push(followerId);
-        User.findByIdAndUpdate( { _id: targetUser._id }, { followers: newFollowers })
-        .then((targetUser) => {
-          res.status(201).json({ message: 'Follower added successfully from ' + followerId + ' to ' + targetUser._id })
-        });
+        return User.findByIdAndUpdate( { _id: targetUser._id }, { followers: newFollowers })
       }
+    })
+    .then((targetUser) => {
+      res.status(201).json({ message: 'Follower added successfully from ' + followerId + ' to ' + targetUser._id })
     });
 
   }
 
   if (req.body.type === 'unfollow') {
 
-    User.findOne( { username: req.params.username })
+    User.findOne( { _id: req.params.id })
     .then((targetUser) => {
       let newFollowers = targetUser.followers;
       let index = newFollowers.indexOf(followerId);
       if (index >= 0) {
         newFollowers.splice(index, 1);
-        User.findByIdAndUpdate( { _id: targetUser._id }, { followers: newFollowers })
-        .then((targetUser) => {
-          res.status(201).json({ message: 'Follower removed successfully' })
-        });
+        return User.findByIdAndUpdate( { _id: targetUser._id }, { followers: newFollowers })
       } else {
         res.status(201).json({ message: 'User was not following already!'})
       }
+    })
+    .then((targetUser) => {
+      res.status(201).json({ message: 'Follower removed successfully' })
     });
   }
 

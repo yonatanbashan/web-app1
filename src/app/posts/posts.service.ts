@@ -1,5 +1,5 @@
+import { Post } from './../models/post.model';
 import { AuthService } from '../auth/auth.service';
-import { Post } from '../models/post.model';
 import { Comment } from '../models/comment.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -112,9 +112,10 @@ export class PostsService {
     .pipe(map(this.mapComments));
   }
 
-  deleteComment(comment: Comment) {
+  deleteComment(comment: Comment, post: Post) {
+    const myId = this.authService.getActiveUserId();
     // UI protection; Add also Post owner authorization to delete
-    if (comment.creatorId !== this.authService.getActiveUserId()) {
+    if (comment.creatorId !== myId && post.creatorId !== myId) {
       return;
     }
     return this.http.delete(this.serverAddress + 'api/comments/' + comment.id)

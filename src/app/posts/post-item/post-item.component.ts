@@ -1,3 +1,5 @@
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { User } from './../../models/user.model';
 import { AuthService } from '../../auth/auth.service';
 import { PostsService } from './../posts.service';
 import { Post } from '../../models/post.model';
@@ -12,16 +14,27 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 export class PostItemComponent implements OnInit {
 
   @Input() post: Post;
+  @Input() user: User;
   fullDisplay = false;
   comments: Comment[] = [];
-  isLoadingComments: false;
+  isLoadingComments = false;
   @ViewChild('commentInput') commentInput: ElementRef;
 
   constructor(
     private postsService: PostsService,
     private authService: AuthService) { }
+    commentForm: FormGroup;
+
 
   ngOnInit() {
+    this.commentForm = new FormGroup({
+      'content': new FormControl(null, Validators.required),
+    });
+  }
+
+  onSubmitComment() {
+    this.addComment(this.commentForm.value.content);
+    this.commentForm.reset();
   }
 
   onDelete(postId) {
@@ -39,29 +52,41 @@ export class PostItemComponent implements OnInit {
     }
   }
 
-  addComment() {
-    this.postsService.addComment(this.commentInput.nativeElement.value, this.post)
+  addComment(comment: string) {
+    this.postsService.addComment(comment, this.post)
     .subscribe(() => {
       this.updateComments();
     });
-    this.commentInput.nativeElement.value = '';
   }
 
   updateComments() {
+    this.isLoadingComments = true;
     this.postsService.getComments(this.post)
     .subscribe((comments) => {
+      this.isLoadingComments = false;
       this.comments = comments;
     })
   }
 
   deleteComment(comment: Comment) {
-    const deleteAttempt = this.postsService.deleteComment(comment)
+    this.isLoadingComments = true;
+    const deleteAttempt = this.postsService.deleteComment(comment, this.post)
     if (deleteAttempt) { // Make sure it was not rejected by pre-checks
       deleteAttempt.subscribe(() => {
         this.updateComments();
       })
+    } else {
+      this.isLoadingComments = false;
     }
 
+  }
+
+  canComment() {
+    const myId = this.getActiveUserId();
+    if (this.user === null) {
+      return false;
+    }
+    return (this.post.creatorId === myId || this.user.followers.includes(myId));
   }
 
 
