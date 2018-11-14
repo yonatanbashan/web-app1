@@ -1,48 +1,51 @@
-<div class="container">
-    <div class="col-md-8 col-md-offset-2 text-center">
-        <p class="app-title">Join Bloggism,</p>
-        <p class="app-subtitle">And immediately share your inner to the outer</p>
-        <hr>
-        <p class="app-subtitle-small">Please enter your username and password, and instantly join us!</p>
-    </div>
-  </div>
-<div class="container col-md-4 col-md-offset-4">
-  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-    <div class="row">
-      <input
-      type="text"
-      name="username"
-      class="form-control"
-      placeholder="Username"
-      id="username"
-      formControlName="username"
-      (input)="onCheck()"
-      >
+<div class="center-container column">
+  <mat-card style="margin-bottom: 200px;">
+    <mat-card-content>
+      <div class="col-md-12 col-md-offset-2 text-center">
+          <p class="app-title">Join Bloggism,</p>
+          <p class="app-subtitle">And immediately share your inner to the outer</p>
+          <hr>
+          <p class="app-subtitle-small">Please choose a username and a password, and instantly join us!</p>
+      </div>
 
-    <span class="app-form-warning" *ngIf="checkTypedUserAlreadyExists()">Username already exists, please choose another username</span>
-    <span class="app-form-warning" *ngIf="!signupForm.get('username').valid && signupForm.get('username').touched">You must provide a valid username</span>
-    </div>
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <input
+          type="text"
+          name="username"
+          class="form-control user-login-input"
+          placeholder="Username"
+          id="username"
+          formControlName="username"
+          (input)="onCheckTypedUserAlreadyExists()"
+          >
 
-    <br>
-    <div class="row">
-      <input
-      type="password"
-      rows="8"
-      name="password"
-      class="form-control new-post-content"
-      placeholder="Password"
-      id="password"
-      formControlName="password"
-      >
-    </div>
-    <br>
-    <div class="row">
-      <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="!signupForm.valid || checkTypedUserAlreadyExists()">
-        Join
-      </button>
-    </div>
-  </form>
+        <span class="app-form-warning" *ngIf="typedUserAlreadyExists">Username already exists, please choose another username</span>
+        <span class="app-form-warning" *ngIf="!signupForm.get('username').valid && signupForm.get('username').touched">You must provide a valid username</span>
+        </div>
+
+        <br>
+        <div class="row">
+          <input
+          type="password"
+          rows="8"
+          name="password"
+          class="form-control user-login-input"
+          placeholder="Password"
+          id="password"
+          formControlName="password"
+          >
+        </div>
+        <br>
+        <div class="row">
+          <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="!signupForm.valid || typedUserAlreadyExists || waitingCheck">
+            Join
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
 </div>

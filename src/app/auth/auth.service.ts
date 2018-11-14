@@ -56,8 +56,18 @@ export class AuthService {
     return this.userExist;
   }
 
-  isTypedUserAlreadyExists() {
-    return this.typedUserAlreadyExists;
+  isTypedUserAlreadyExists(username: string) {
+    if  (username === '' || username === null) {
+      this.typedUserAlreadyExists = false;
+      return;
+    }
+    const request = {
+      type: 'check',
+      args: {
+        username: username
+      }
+    };
+    return this.http.post<{message: string, user: any}>(this.serverAddress + 'api/users', request)
   }
 
   setActiveUser(username: string) {

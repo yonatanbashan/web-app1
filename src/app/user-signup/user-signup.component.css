@@ -1,0 +1,9 @@
+mat-card-content {
+  margin-right: 10%;
+  margin-left: 10%;
+}
+
+.user-login-input {
+  border: none;
+  margin-top: 1rem;
+}

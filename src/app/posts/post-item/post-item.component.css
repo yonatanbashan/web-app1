@@ -1,15 +1,30 @@
 .post-title {
-  font-size: 22px;
+  font-size: 1.5em;
   font-weight: 700;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.post-content {
-  font-size: 13px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+.comment-text-content {
+  font-size: 1em;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.post-text-content {
+  font-size: 1.1em;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.comments-header {
+  font-size: 1em;
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .post-hover {
+  background-color: #eaebf5;
+}
+
+.post-hover2 {
   background-color: #eaebf5;
 }
 
@@ -23,6 +38,20 @@
   max-height: 25rem;
   min-height: 1rem;
   width: 60%;
+}
+
+
+.comment-button {
+  font-size: 80%;
+  height: 1.5rem;
+  padding: 0 8px;
+  margin: 5px 0;
+}
+
+.delete-comment-button {
+  font-size: 80%;
+  height: 1.5rem;
+  padding: 0 5px;
 }
 
 

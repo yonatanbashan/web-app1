@@ -1,6 +1,7 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-signup',
@@ -10,10 +11,12 @@ import { Component, OnInit } from '@angular/core';
 export class UserSignupComponent implements OnInit {
 
   typedUserAlreadyExists = false;
+  waitingCheck = false;
 
   constructor(private authService: AuthService) { }
 
   signupForm: FormGroup;
+  checkSubs: Subscription;
 
   ngOnInit() {
     this.signupForm = new FormGroup({
@@ -22,8 +25,25 @@ export class UserSignupComponent implements OnInit {
     });
   }
 
-  checkTypedUserAlreadyExists() {
-    return this.authService.isTypedUserAlreadyExists();
+  onCheckTypedUserAlreadyExists() {
+    if (this.checkSubs !== undefined) {
+      this.checkSubs.unsubscribe();
+    }
+    if (this.signupForm.value.username === '') {
+      this.waitingCheck = false;
+      this.typedUserAlreadyExists = false;
+      return;
+    }
+    this.waitingCheck = true;
+    this.checkSubs = this.authService.isTypedUserAlreadyExists(this.signupForm.value.username).subscribe((userData) => {
+      if (userData.user !== null) {
+        this.typedUserAlreadyExists = true;
+        this.waitingCheck = false;
+      } else {
+        this.typedUserAlreadyExists = false;
+        this.waitingCheck = false;
+      }
+    })
   }
 
   onSubmit() {
@@ -32,10 +52,5 @@ export class UserSignupComponent implements OnInit {
       this.signupForm.value.password);
 
   }
-
-  onCheck(username: string) {
-    this.authService.checkUserExists(this.signupForm.value.username);
-  }
-
 
 }
