@@ -20,17 +20,22 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.post-hover {
-  background-color: #eaebf5;
-}
-
-.post-hover2 {
+.post-bg-color {
   background-color: #eaebf5;
 }
 
 .post-item {
   border-radius: 20px;
   padding: 20px;
+  transition: 0.2s;
+}
+
+.post-item:hover {
+  background-color: #eaebf5;
+}
+
+.post-item-colored {
+  background-color: #eaebf5;
 }
 
 .date-text {

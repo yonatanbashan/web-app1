@@ -2,9 +2,10 @@ import { User } from './../models/user.model';
 import { UsersService } from './../users.service';
 import { PostsService } from './../posts/posts.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from '../models/post.model';
 import { sortPostsByDate } from '../common'
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -16,6 +17,8 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private usersService: UsersService,
     private postsService: PostsService,
+    private authService: AuthService,
+    private router: Router,
     private route: ActivatedRoute
   ) { }
 
@@ -24,6 +27,7 @@ export class UserProfileComponent implements OnInit {
   error = null;
   posts: Post[] = [];
   user: User;
+  isMe = false;
 
   ngOnInit() {
     this.username = this.route.snapshot.params['username'];
@@ -32,9 +36,19 @@ export class UserProfileComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.username = params['username'];
       this.getUserPosts(this.username);
+      this.userInitialize(this.username);
       this.usersService.getUser(this.username).subscribe(this.acclaimUser);;
     });
 
+  }
+
+
+  private userInitialize(username: string) {
+    if (username === this.authService.getActiveUser()) {
+      this.isMe = true;
+    } else {
+      this.isMe = false;
+    }
   }
 
   private acclaimUser = (response) => {

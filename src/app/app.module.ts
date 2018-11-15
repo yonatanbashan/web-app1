@@ -3,7 +3,6 @@ import { AuthService } from './auth/auth.service';
 import { NewlinePipe } from './newline.pipe';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule, Router } from '@angular/router';
-import { PostHighlightDirective } from './directives/post-highlight.directive';
 import { PostsService } from './posts/posts.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -11,7 +10,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { PostItemComponent } from './posts/post-item/post-item.component';
-import { PostsComponent } from './posts/posts.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { HomeComponent } from './home/home.component';
 import { NewPostComponent } from './posts/new-post/new-post.component';
@@ -27,13 +25,12 @@ import { SpinnerComponent } from './common/spinner/spinner.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FindComponent } from './find/find.component';
 import { UsersService } from './users.service';
+import { ActionBarComponent } from './user-profile/action-bar/action-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PostItemComponent,
-    PostsComponent,
-    PostHighlightDirective,
     NavigationComponent,
     HomeComponent,
     NewPostComponent,
@@ -42,7 +39,8 @@ import { UsersService } from './users.service';
     UserSignupComponent,
     SpinnerComponent,
     UserProfileComponent,
-    FindComponent
+    FindComponent,
+    ActionBarComponent
   ],
   imports: [
     BrowserModule,

@@ -3,3 +3,21 @@
   font-weight: bolder;
   color: #3366FF;
 }
+
+.user-profile-title:hover {
+  text-decoration: underline;
+}
+
+.action-bar {
+  border-radius: 20px;
+  padding: 20px 0;
+  display: flex;
+
+  align-items: center;
+  flex-flow: column wrap;
+  transition: 0.2s;
+}
+
+.action-bar:hover {
+  background-color: #eaebf5;
+}

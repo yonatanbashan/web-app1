@@ -1,4 +1,4 @@
-<div appPostHighlight class="post-item" [ngClass]="{'post-hover2': fullDisplay}">
+<div class="post-item" [ngClass]="{'post-item-colored': fullDisplay}">
   <span (click)="toggleDisplay()" style="cursor: pointer;">
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
@@ -37,7 +37,7 @@
             </div>
         </form>
         <br>
-        <span class="comments-header" *ngIf="comments.length > 0">
+        <span class="comments-header" *ngIf="comments.length > 0" style="margin-left: 2%;">
             Comments:
             <br><br>
         </span>

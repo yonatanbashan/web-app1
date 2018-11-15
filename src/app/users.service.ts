@@ -37,21 +37,21 @@ export class UsersService {
       searchName: name
     }
     return this.http.post(this.serverAddress + 'api/users/find/', request)
-    .pipe(map(this.mapUsers))
+    .pipe(map(this.mapUsers));
   }
 
   followUser(userId: string) {
     const request = {
       type: 'follow'
     }
-    return this.http.put<{message: string, posts: any}>(this.serverAddress + 'api/users/' + userId, request)
+    return this.http.put<{message: string, posts: any}>(this.serverAddress + 'api/users/' + userId, request);
   }
 
   unfollowUser(userId: string) {
     const request = {
       type: 'unfollow'
     }
-    return this.http.put<{message: string, posts: any}>(this.serverAddress + 'api/users/' + userId, request)
+    return this.http.put<{message: string, posts: any}>(this.serverAddress + 'api/users/' + userId, request);
   }
 
   // Checks whether a given user is followed by current user
@@ -65,6 +65,11 @@ export class UsersService {
 
   isMe(user: User) {
     return user.id === this.authService.getActiveUserId();
+  }
+
+  getFollowedUsers() {
+    return this.http.post<{message: string, users: User[]}>(this.serverAddress + 'api/users/followed/', {})
+    .pipe(map(this.mapUsers));
   }
 
 }

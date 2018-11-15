@@ -1,2 +1,2 @@
 export * from './date-formatter';
-export * from './sorters';
+export { sortPostsByDate, sortUsersByName } from './sorters';

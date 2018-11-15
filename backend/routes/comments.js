@@ -13,9 +13,9 @@ router.post('', checkAuth, (req, res, next) => {
   let username;
   let followersOfPostAuthor;
 
-  Post.findOne({ _id: req.body.postId })
+  Post.findById(req.body.postId)
   .then((post) => {
-    return User.findOne( {_id: post.creator })
+    return User.findById(post.creator)
   })
   .then((postAuthor) => {
     followersOfPostAuthor = postAuthor.followers;
@@ -23,7 +23,7 @@ router.post('', checkAuth, (req, res, next) => {
     return
   })
   .then(() => {
-    return User.findOne({ _id: req.userData.userId });
+    return User.findById(req.userData.userId);
   })
   .then((user) => {
       username = user.username;

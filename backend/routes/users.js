@@ -8,58 +8,19 @@ const User = require('../models/user');
 
 // User handling
 
+// POST requests
 
-// Fetch single user
-router.get('/:username', checkAuth, (req, res, next) => {
-  User.findOne( { username: req.params.username })
-  .then((user) => {
-    res.status(201).json({
-      message: 'User fetched successfully!',
-      user: user
+// Get all users which the current user is following
+router.post('/followed', checkAuth, (req, res, next) => {
+  User.find( { followers: {$in: [req.userData.userId]} })
+  .then(users => {
+    res.status(200).json({
+      message: 'Followed users fetched successfully!',
+      users: users
     });
   });
 });
 
-// Add/remove follower to user
-router.put('/:id', checkAuth, (req, res, next) => {
-
-  const followerId = req.userData.userId.toString();
-
-  if (req.body.type === 'follow') {
-
-    User.findOne( { _id: req.params.id })
-    .then((targetUser) => {
-      if (!targetUser.followers.includes(followerId)) {
-        let newFollowers = targetUser.followers;
-        newFollowers.push(followerId);
-        return User.findByIdAndUpdate( { _id: targetUser._id }, { followers: newFollowers })
-      }
-    })
-    .then((targetUser) => {
-      res.status(201).json({ message: 'Follower added successfully from ' + followerId + ' to ' + targetUser._id })
-    });
-
-  }
-
-  if (req.body.type === 'unfollow') {
-
-    User.findOne( { _id: req.params.id })
-    .then((targetUser) => {
-      let newFollowers = targetUser.followers;
-      let index = newFollowers.indexOf(followerId);
-      if (index >= 0) {
-        newFollowers.splice(index, 1);
-        return User.findByIdAndUpdate( { _id: targetUser._id }, { followers: newFollowers })
-      } else {
-        res.status(201).json({ message: 'User was not following already!'})
-      }
-    })
-    .then((targetUser) => {
-      res.status(201).json({ message: 'Follower removed successfully' })
-    });
-  }
-
-});
 
 // Get users by search
 router.post('/find', checkAuth, (req, res, next) => {
@@ -156,6 +117,60 @@ router.post('', (req, res, next) => {
   }
 
 });
+
+
+// GET requests
+
+// Fetch single user
+router.get('/:username', checkAuth, (req, res, next) => {
+  User.findOne( { username: req.params.username })
+  .then((user) => {
+    res.status(201).json({
+      message: 'User fetched successfully!',
+      user: user
+    });
+  });
+});
+
+
+
+
+
+// PUT requests
+
+// Add/remove follower to user
+router.put('/:id', checkAuth, (req, res, next) => {
+
+  const followerId = req.userData.userId.toString();
+
+  if (req.body.type === 'follow') {
+
+    User.findById(req.params.id)
+    .then((targetUser) => {
+      if (!targetUser.followers.includes(followerId)) {
+        let newFollowers = targetUser.followers;
+        newFollowers.push(followerId);
+        return User.findByIdAndUpdate( { _id: targetUser._id }, { followers: newFollowers })
+      }
+    })
+    .then((targetUser) => {
+      res.status(201).json({ message: 'Follower added successfully from ' + followerId + ' to ' + targetUser._id })
+    });
+
+  }
+
+  if (req.body.type === 'unfollow') {
+
+    User.findByIdAndUpdate(req.params.id, { $pull: { followers: followerId } })
+    .then((targetUser) => {
+      res.status(201).json({ message: 'Follower removed successfully' })
+    });
+  }
+
+});
+
+
+// DELETE requests
 
 router.delete('/:id', (req, res, next) => {
   User.deleteOne({ _id: req.params.id})
