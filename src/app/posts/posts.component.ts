@@ -4,6 +4,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
+import { sortPostsByDate } from '../common'
 
 @Component({
   selector: 'app-posts',
@@ -26,7 +27,7 @@ export class PostsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.postsSub = this.postsService.getPostUpdateListener()
     .subscribe((posts) => {
-      this.posts = posts;
+      this.posts = posts.sort(sortPostsByDate);
       this.postsAvailable = true;
     });
     this.postsService.getPosts();

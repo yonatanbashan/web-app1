@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConnectionService } from '../connection.service';
+import { dateFormat } from 'src/app/common';
 
 @Injectable()
 export class PostsService {
@@ -26,6 +27,8 @@ export class PostsService {
         title: post.title,
         content: post.content,
         creatorId: post.creator,
+        formattedDate: dateFormat(new Date(post.createDate)),
+        createDate: new Date(post.createDate),
         id: post._id
       };
     });
@@ -59,6 +62,7 @@ export class PostsService {
       .subscribe((responseData) => {
         const id = responseData.postId;
         const newPost = new Post(title, content, id);
+        console.log(newPost);
         this.posts.push(newPost);
         this.postsUpdated.next([...this.posts]);
         this.getPosts();
@@ -102,6 +106,8 @@ export class PostsService {
         creatorId: comment.creatorId,
         creatorName: comment.creatorName,
         postId: comment.postId,
+        formattedDate: dateFormat(new Date(comment.createDate)),
+        createDate: new Date(comment.createDate),
         id: comment._id
       };
     });

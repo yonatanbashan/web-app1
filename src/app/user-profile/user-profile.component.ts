@@ -4,6 +4,7 @@ import { PostsService } from './../posts/posts.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Post } from '../models/post.model';
+import { sortPostsByDate } from '../common'
 
 @Component({
   selector: 'app-user-profile',
@@ -49,7 +50,7 @@ export class UserProfileComponent implements OnInit {
     this.postsService.getUserPosts(username)
     .subscribe((posts) => {
       if (posts) {
-        this.posts = posts;
+        this.posts = posts.sort(sortPostsByDate);
       }
       this.isLoading = false;
       this.error = null;

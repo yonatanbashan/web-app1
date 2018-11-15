@@ -3,5 +3,7 @@ export interface Comment {
   creatorId: string;
   creatorName: string;
   postId: string;
+  createDate: string;
+  formattedDate: string;
   id: string;
 }

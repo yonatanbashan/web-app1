@@ -102,6 +102,8 @@ export class AuthService {
           this.activeUser = null;
         }
       }
+    }, (error) => {
+      this.authStatusListener.next(false);
     });
 
   }

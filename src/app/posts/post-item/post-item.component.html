@@ -3,6 +3,7 @@
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
       <div class="post-title">{{ post.title }}</div>
+      <div class="date-text">{{ post.formattedDate }}</div>
     </div>
   </div>
   <hr>
@@ -44,6 +45,7 @@
           <div class="flex-container">
             <span class="col-md-2 col-md-offset-6">
             <a [routerLink]="['/user', comment.creatorName]">#{{ comment.creatorName }}:</a>
+            <div class="date-text">{{ comment.formattedDate }}</div>
             </span>
             <span class="col-md-8 col-md-offset-6">
             <div class="h-margin comment-text-content" [innerHtml]="comment.content | newline"></div>

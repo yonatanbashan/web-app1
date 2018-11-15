@@ -33,6 +33,12 @@
   padding: 20px;
 }
 
+.date-text {
+  color: #888888;
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
 .new-comment-input {
   resize: none;
   max-height: 25rem;

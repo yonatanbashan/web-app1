@@ -2,7 +2,7 @@
   <span *ngIf="!isLoading">
     <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
 
-      <div class="row">
+      <div class="row" style="min-height: 9vh;">
         <input
         type="text"
         name="username"
@@ -42,6 +42,7 @@
           Sign Up
         </button>
       </div>
+      <span class="app-form-warning" *ngIf="authDenied">Incorrect username/password</span>
     </form>
   </span>
   <span *ngIf="isLoading" class="center-container">
