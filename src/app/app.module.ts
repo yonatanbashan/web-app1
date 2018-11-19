@@ -13,19 +13,21 @@ import { PostItemComponent } from './posts/post-item/post-item.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { HomeComponent } from './home/home.component';
 import { NewPostComponent } from './posts/new-post/new-post.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ConnectionService } from './connection.service';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { UserSignupComponent } from './user-signup/user-signup.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCardModule, MatProgressSpinnerModule, MatNativeDateModule, MatIconModule, MatCheckboxModule } from '@angular/material';
 
-import { MatCardModule, MatProgressSpinnerModule } from '@angular/material';
 import { SpinnerComponent } from './common/spinner/spinner.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { FindComponent } from './find/find.component';
 import { UsersService } from './users.service';
-import { ActionBarComponent } from './user-profile/action-bar/action-bar.component';
+import { ActionBarComponent } from './user/user-profile/action-bar/action-bar.component';
+import { UserEditComponent } from './user/user-edit/user-edit.component';
 
 @NgModule({
   declarations: [
@@ -40,15 +42,21 @@ import { ActionBarComponent } from './user-profile/action-bar/action-bar.compone
     SpinnerComponent,
     UserProfileComponent,
     FindComponent,
-    ActionBarComponent
+    ActionBarComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,
     RouterModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     MatCardModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatIconModule,
+    MatCheckboxModule,
     MatProgressSpinnerModule,
     BrowserAnimationsModule
   ],
@@ -57,6 +65,7 @@ import { ActionBarComponent } from './user-profile/action-bar/action-bar.compone
     ConnectionService,
     AuthService,
     UsersService,
+    MatDatepickerModule,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })

@@ -43,7 +43,7 @@ export class NewPostComponent implements OnInit, OnDestroy {
       this.addPostForm.value.content
     );
     this.addPostForm.reset();
-    this.router.navigate(['/posts']);
+    this.router.navigate(['/user', this.authService.getActiveUser()]);
   }
 
 }

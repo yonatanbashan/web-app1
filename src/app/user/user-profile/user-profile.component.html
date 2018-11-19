@@ -8,6 +8,17 @@
         #{{ username }}
       </div>
     </div>
+    <div class="text-center" *ngIf="!isLoadingInfo">
+      <div class="user-header-text" *ngIf="headerText !== ''">
+          {{ headerText }}
+      </div>
+      <div class="app-subtitle-small" *ngIf="birthDayText !== '' && !hideDate">
+          Birthday: {{ birthDayText }}
+      </div>
+    </div>
+    <span *ngIf="isLoadingInfo">
+      <app-spinner></app-spinner>
+    </span>
     <br>
     <br>
     <span *ngIf="!isLoading && !error">

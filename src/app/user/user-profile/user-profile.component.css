@@ -8,6 +8,11 @@
   text-decoration: underline;
 }
 
+.user-header-text {
+  font-size: 1.2rem;
+  color: rgb(26, 52, 131);
+}
+
 .action-bar {
   border-radius: 20px;
   padding: 20px 0;

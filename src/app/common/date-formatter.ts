@@ -1,4 +1,4 @@
-export function dateFormat(date : Date) {
+export function dateFormat(date : Date, options: any = {}) {
 
   const now = new Date();
 
@@ -23,7 +23,15 @@ export function dateFormat(date : Date) {
   mdy = (year === nowYear && day === nowDay && month === nowMonth) ? 'Today' : `${month} ${day}, ${year}`;
   hm = `${hours}:${minutes}`;
 
-  const formatted = `${mdy} at ${hm}`
+  let formatted;
+
+  if (options.dateOnly) {
+    formatted = `${mdy}`
+  } else {
+    formatted = `${mdy} at ${hm}`
+
+  }
+
 
   return formatted;
 

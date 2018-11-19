@@ -21,7 +21,8 @@ export class UsersService {
       const newUser: User = {
         username: user.username,
         id: user._id,
-        followers: user.followers
+        followers: user.followers,
+        userInfo: user.userInfo
       }
       return newUser;
     });
@@ -70,6 +71,21 @@ export class UsersService {
   getFollowedUsers() {
     return this.http.post<{message: string, users: User[]}>(this.serverAddress + 'api/users/followed/', {})
     .pipe(map(this.mapUsers));
+  }
+
+  getUserInfo(name: string) {
+    const request = {
+      type: 'userInfo',
+      username: name
+    }
+    return this.http.post<{ message: string, userInfo: any}>(this.serverAddress + 'api/users/info/', request);
+  }
+
+  updateUserInfo(userInfo: any) {
+    const request = {
+      userInfo: userInfo
+    };
+    return this.http.put(this.serverAddress + 'api/users/info/', request);
   }
 
 }

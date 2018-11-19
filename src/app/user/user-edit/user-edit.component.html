@@ -1,0 +1,62 @@
+<div class="center-container column">
+  <mat-card class="user-edit-card" style="margin-bottom: 200px; min-width: 50vw; min-height: 60vh;">
+    <mat-card-content class="center-container column">
+      <span *ngIf="!isLoading">
+      <form [formGroup]="updateUserForm" (ngSubmit)="onSubmit()">
+          <p class="app-subtitle">Edit your user info</p>
+          <br>
+          <p class="app-subtitle-small">Birth date:</p>
+          <div class="row">
+            <div class="col-md-8">
+              <input
+                (dateInput)="dateChangedEvent($event)" (dateChange)="dateChangedEvent($event)"
+                matInput
+                [matDatepicker]="datePicker"
+                placeholder="Choose a date"
+                formControlName="date"
+                class="form-control user-edit-input">
+            </div>
+            <div class="col-md-4">
+              <mat-datepicker-toggle matSuffix [for]="datePicker">
+                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+              </mat-datepicker-toggle>
+            </div>
+            <mat-datepicker #datePicker></mat-datepicker>
+
+          </div>
+          <br>
+          <mat-checkbox
+            type="checkbox"
+            formControlName="hideDate"
+            class="user-edit-checkbox"
+            name="hideDate"
+            id="hideDate"
+            color="primary"></mat-checkbox>
+          <label for="hideDate"><p class="app-subtitle-small">Hide date on profile</p></label>
+
+          <br>
+          <p class="app-subtitle-small">Profile header text:</p>
+          <div class="row">
+            <input
+              placeholder="Profile header text"
+              name="headerText"
+              formControlName="headerText"
+              class="form-control user-edit-input"
+            >
+          </div>
+          <br>
+          <div class="row">
+            <button
+            type="submit"
+            class="btn btn-primary app-button-margin">
+              Update
+            </button>
+          </div>
+      </form>
+      </span>
+      <span *ngIf="isLoading">
+        <app-spinner></app-spinner>
+      </span>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -35,6 +35,23 @@ router.post('/find', checkAuth, (req, res, next) => {
   });
 });
 
+// Retrieve user info
+router.post('/info', checkAuth, (req, res, next) => {
+
+  User.findOne({ username: req.body.username })
+  .then(response => {
+    res.status(200).json({
+      message: 'User info for username "' + req.body.username + '" was sent back successfully!',
+      userInfo: response.userInfo
+    })
+  })
+  .catch(() => {
+    res.status(404).json({
+      message: 'User wasn\'t found!'
+    });
+  });
+})
+
 // Add new user
 router.post('/add', (req, res, next) => {
 
@@ -43,7 +60,8 @@ router.post('/add', (req, res, next) => {
       const user = new User({
       username:  req.body.username,
       password: hash,
-      followers: []
+      followers: [],
+      userInfo: {}
     });
     user.save().then(createdUser => {
       const token = jwt.sign(
@@ -138,6 +156,17 @@ router.get('/:username', checkAuth, (req, res, next) => {
 
 // PUT requests
 
+
+// Update user info
+router.put('/info', checkAuth, (req, res, next) => {
+  User.findByIdAndUpdate(req.userData.userId, { userInfo: req.body.userInfo } )
+  .then(response => {
+    res.status(200).json({
+      message: 'User info updated successfully!'
+    });
+  })
+})
+
 // Add/remove follower to user
 router.put('/:id', checkAuth, (req, res, next) => {
 
@@ -168,6 +197,11 @@ router.put('/:id', checkAuth, (req, res, next) => {
   }
 
 });
+
+
+
+
+
 
 
 // DELETE requests

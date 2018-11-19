@@ -1,4 +1,4 @@
-import { UsersService } from './../../users.service';
+import { UsersService } from 'src/app/users.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
@@ -25,6 +25,10 @@ export class ActionBarComponent implements OnInit {
 
   onNewPost() {
     this.router.navigate(['/new-post']);
+  }
+
+  onEditProfile() {
+    this.router.navigate(['/user-edit']);
   }
 
 }
