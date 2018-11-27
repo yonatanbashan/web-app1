@@ -1,8 +1,9 @@
+import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { UsersService } from 'src/app/users.service';
 import { PostsService } from 'src/app/posts/posts.service';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Post } from 'src/app/models/post.model';
 import { sortPostsByDate } from 'src/app/common'
 import { AuthService } from 'src/app/auth/auth.service';
@@ -13,7 +14,7 @@ import { dateFormat } from 'src/app/common';
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css']
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent implements OnInit, OnDestroy {
 
   constructor(
     private usersService: UsersService,
@@ -30,6 +31,7 @@ export class UserProfileComponent implements OnInit {
   posts: Post[] = [];
   user: User;
   isMe = false;
+  postsListenerSubs: Subscription;
 
   // UserInfo-related
   isLoadingInfo: boolean = false;
@@ -40,6 +42,13 @@ export class UserProfileComponent implements OnInit {
   showInfo: boolean = false;
 
   ngOnInit() {
+
+    // Listen to changes from the posts service subject
+    this.postsListenerSubs = this.postsService.getPostUpdateListener()
+    .subscribe(posts => {
+      this.posts = posts.sort(sortPostsByDate);
+    });
+
     this.username = this.route.snapshot.params['username'];
     this.getUserPosts(this.username);
     this.usersService.getUser(this.username).subscribe(this.acclaimUser);
@@ -68,6 +77,10 @@ export class UserProfileComponent implements OnInit {
       this.isLoadingInfo = false;
     });
 
+  }
+
+  ngOnDestroy() {
+    this.postsListenerSubs.unsubscribe();
   }
 
 

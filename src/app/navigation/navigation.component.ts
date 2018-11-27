@@ -10,7 +10,7 @@ import { AuthService } from '../auth/auth.service';
 })
 export class NavigationComponent implements OnInit, OnDestroy {
 
-  constructor(protected authService: AuthService,
+  constructor(private authService: AuthService,
     private router: Router) { }
 
   activeUser: string = null;
@@ -27,6 +27,11 @@ export class NavigationComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.isAuthSubs.unsubscribe();
   }
+
+  getActiveUserId() {
+    return this.authService.getActiveUserId();
+  }
+
 
   getActiveUser() {
     return this.activeUser;
