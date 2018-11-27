@@ -2,6 +2,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { faUser, faKey } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-user-signup',
@@ -17,6 +18,10 @@ export class UserSignupComponent implements OnInit {
 
   signupForm: FormGroup;
   checkSubs: Subscription;
+
+  // Font-awesome objects
+  faUser = faUser;
+  faKey = faKey;
 
   ngOnInit() {
     this.signupForm = new FormGroup({

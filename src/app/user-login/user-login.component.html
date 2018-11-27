@@ -2,42 +2,53 @@
   <span *ngIf="!isLoading">
     <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
 
-      <div class="row" style="min-height: 9vh;">
-        <input
-        type="text"
-        name="username"
-        class="form-control user-login-input"
-        placeholder="Username"
-        id="username"
-        formControlName="username"
-        >
-      <span class="app-form-warning" *ngIf="!signInForm.get('username').valid && signInForm.get('username').touched">You must provide a valid username</span>
+      <div class="mb-1">
+        <div class="input-group">
+          <div class="input-group-prepend">
+              <span class="input-group-text">
+                <fa-icon [icon]="faUser"></fa-icon>
+              </span>
+          </div>
+          <input
+          type="text"
+          name="username"
+          class="form-control"
+          placeholder="Username"
+          id="username"
+          formControlName="username"
+          >
+        </div>
+        <span class="app-form-warning" *ngIf="!signInForm.get('username').valid && signInForm.get('username').touched">You must provide a valid username</span>
+        <span class="app-form-warning" *ngIf="signInForm.get('username').valid || !signInForm.get('username').touched"><br></span>
       </div>
 
-      <div class="row">
-        <input
-        type="password"
-        rows="8"
-        name="password"
-        class="form-control user-login-input"
-        placeholder="Password"
-        id="password"
-        formControlName="password"
-        >
+      <div class="mb-3">
+        <div class="input-group">
+          <div class="input-group-prepend">
+              <span class="input-group-text">
+                <fa-icon [icon]="faKey"></fa-icon>
+              </span>
+          </div>
+          <input
+          type="password"
+          name="password"
+          class="form-control"
+          placeholder="Password"
+          id="password"
+          formControlName="password"
+          >
+        </div>
       </div>
-
-      <span class="app-form-warning" *ngIf="submitClicked && !isUserExist()">Username/password incorrect</span>
-
-      <div class="row">
+      <div class="d-flex flex-column mt-3">
         <button
         type="submit"
-        class="btn btn-primary app-button-margin"
+        class="btn btn-primary btn-lg mb-1"
         [disabled]="!signInForm.valid">
           Login
         </button>
         <button
         type="button"
-        class="btn btn-primary app-button-margin"
+        class="btn btn-primary btn-sm mb-1"
         (click)="onSignup()">
           Sign Up
         </button>
@@ -50,7 +61,7 @@
   </span>
 </span>
 <span *ngIf="getActiveUser() !== null && !isLoading">
-    <p class="app-subtitle-small">Hello, {{ getActiveUser() }}! <br> Click 'posts' to see your posts.</p>
+    <p class="app-subtitle-small">Hello, {{ getActiveUser() }}! <br> Click <a [routerLink]="['/user', getActiveUser()]">My Page</a> to see your profile.</p>
   <button
   type="button"
   class="btn btn-primary"

@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { faUser, faKey } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-user-login',
@@ -15,6 +16,10 @@ export class UserLoginComponent implements OnInit, OnDestroy {
   isAuthSubs: Subscription;
   isLoading = false;
   authDenied = false;
+
+  // Font-awesome objects
+  faUser = faUser;
+  faKey = faKey;
 
   constructor(
     private authService: AuthService,

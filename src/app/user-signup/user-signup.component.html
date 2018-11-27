@@ -9,38 +9,51 @@
       </div>
 
       <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-        <div class="row" style="min-height: 8vh;">
-          <input
-          type="text"
-          name="username"
-          class="form-control user-login-input"
-          placeholder="Username"
-          id="username"
-          formControlName="username"
-          (input)="onCheckTypedUserAlreadyExists()"
-          >
+        <div class="mb-1">
+          <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <fa-icon [icon]="faUser"></fa-icon>
+                </span>
+            </div>
+            <input
+            type="text"
+            name="username"
+            class="form-control"
+            placeholder="Username"
+            id="username"
+            formControlName="username"
+            (input)="onCheckTypedUserAlreadyExists()"
+            >
 
-        <span class="app-form-warning" *ngIf="typedUserAlreadyExists">Username already exists, please choose another username</span>
-        <span class="app-form-warning" *ngIf="!signupForm.get('username').valid && signupForm.get('username').touched">You must provide a valid username</span>
+          </div>
+          <span class="app-form-warning" *ngIf="typedUserAlreadyExists">Username already exists, please choose another username</span>
+          <span class="app-form-warning" *ngIf="!signupForm.get('username').valid && signupForm.get('username').touched">You must provide a valid username</span>
+          <span class="app-form-warning" *ngIf="(!typedUserAlreadyExists && signupForm.get('username').valid) || !signupForm.get('username').touched"><br></span>
         </div>
 
-        <br>
-        <div class="row">
-          <input
-          type="password"
-          rows="8"
-          name="password"
-          class="form-control user-login-input"
-          placeholder="Password"
-          id="password"
-          formControlName="password"
-          >
+        <div class="mb-1">
+          <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <fa-icon [icon]="faKey"></fa-icon>
+                </span>
+            </div>
+            <input
+            type="password"
+            name="password"
+            class="form-control"
+            placeholder="Password"
+            id="password"
+            formControlName="password"
+            >
+          </div>
         </div>
-        <br>
-        <div class="row">
+
+        <div class="d-flex flex-column mt-3">
           <button
           type="submit"
-          class="btn btn-primary"
+          class="btn btn-primary btn-lg"
           [disabled]="!signupForm.valid || typedUserAlreadyExists || waitingCheck">
             Join
           </button>

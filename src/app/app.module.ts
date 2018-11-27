@@ -8,6 +8,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+
 import { AppComponent } from './app.component';
 import { PostItemComponent } from './posts/post-item/post-item.component';
 import { NavigationComponent } from './navigation/navigation.component';
@@ -58,7 +60,8 @@ import { UserEditComponent } from './user/user-edit/user-edit.component';
     MatIconModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FontAwesomeModule
   ],
   providers: [
     PostsService,
