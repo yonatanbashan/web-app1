@@ -1,5 +1,9 @@
-<button class="btn btn-sm btn-outline-dark" (click)="onNewPost()">New post</button>
-<button class="btn btn-sm btn-outline-dark" (click)="onEditProfile()">Edit Profile</button>
-<br><br>
-Following:
-<a [routerLink]="['/user', user.username]" *ngFor="let user of followedUsers">#{{ user.username }}</a>
+<div class="container-fluid">
+  <div class="d-flex column">
+    <button class="btn btn-sm btn-outline-dark" (click)="onNewPost()">New post</button>
+    <button class="btn btn-sm btn-outline-dark" (click)="onEditProfile()">Edit Profile</button>
+    <br><br>
+    Following:
+    <a [routerLink]="['/user', user.username]" *ngFor="let user of followedUsers">#{{ user.username }}</a>
+  </div>
+</div>

@@ -4,6 +4,7 @@ import { AuthService } from './auth/auth.service';
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class UsersService {
@@ -11,7 +12,8 @@ export class UsersService {
   constructor(
     private http: HttpClient,
     private connectionService: ConnectionService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   private serverAddress = this.connectionService.getServerAddress();
@@ -85,7 +87,10 @@ export class UsersService {
     const request = {
       userInfo: userInfo
     };
-    return this.http.put(this.serverAddress + 'api/users/info/', request);
+    return this.http.put(this.serverAddress + 'api/users/info/', request)
+    .subscribe(responseData => {
+      this.router.navigate(['/user', this.authService.getActiveUser()]);
+    });
   }
 
 }

@@ -1,62 +1,81 @@
-<div class="center-container column">
-  <mat-card class="user-edit-card" style="margin-bottom: 200px; min-width: 50vw; min-height: 60vh;">
-    <mat-card-content class="center-container column">
-      <span *ngIf="!isLoading">
-      <form [formGroup]="updateUserForm" (ngSubmit)="onSubmit()">
-          <p class="app-subtitle">Edit your user info</p>
-          <br>
-          <p class="app-subtitle-small">Birth date:</p>
-          <div class="row">
-            <div class="col-md-8">
-              <input
-                (dateInput)="dateChangedEvent($event)" (dateChange)="dateChangedEvent($event)"
-                matInput
-                [matDatepicker]="datePicker"
-                placeholder="Choose a date"
-                formControlName="date"
-                class="form-control user-edit-input">
-            </div>
-            <div class="col-md-4">
-              <mat-datepicker-toggle matSuffix [for]="datePicker">
-                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-              </mat-datepicker-toggle>
-            </div>
-            <mat-datepicker #datePicker></mat-datepicker>
+<div class="container-fluid">
+  <div class="row m-5 align-items-center" style="height: 90vh;">
+    <div class="col-8 offset-2">
+      <mat-card class="user-edit-card" style="min-width: 50vw; min-height: 60vh;">
+        <mat-card-content class="center-container column">
+          <span *ngIf="!isLoading">
+          <form [formGroup]="updateUserForm" (ngSubmit)="onSubmit()">
+              <p class="app-subtitle">Edit your user info</p>
+              <br>
+              <p class="app-subtitle-small">Birth date:</p>
+              <div class="row">
+                <div class="col-md-8">
+                  <input
+                    (dateInput)="dateChangedEvent($event)" (dateChange)="dateChangedEvent($event)"
+                    matInput
+                    [matDatepicker]="datePicker"
+                    placeholder="Choose a date"
+                    formControlName="date"
+                    class="form-control user-edit-input">
+                </div>
+                <div class="col-md-4">
+                  <mat-datepicker-toggle matSuffix [for]="datePicker">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                  </mat-datepicker-toggle>
+                </div>
+                <mat-datepicker #datePicker></mat-datepicker>
 
-          </div>
-          <br>
-          <mat-checkbox
-            type="checkbox"
-            formControlName="hideDate"
-            class="user-edit-checkbox"
-            name="hideDate"
-            id="hideDate"
-            color="primary"></mat-checkbox>
-          <label for="hideDate"><p class="app-subtitle-small">Hide date on profile</p></label>
+              </div>
+              <br>
+              <mat-checkbox
+                type="checkbox"
+                formControlName="hideDate"
+                class="user-edit-checkbox"
+                name="hideDate"
+                id="hideDate"
+                color="primary"></mat-checkbox>
+              <label for="hideDate"><p class="app-subtitle-small">Hide date on profile</p></label>
 
-          <br>
-          <p class="app-subtitle-small">Profile header text:</p>
-          <div class="row">
-            <input
-              placeholder="Profile header text"
-              name="headerText"
-              formControlName="headerText"
-              class="form-control user-edit-input"
-            >
-          </div>
-          <br>
-          <div class="row">
-            <button
-            type="submit"
-            class="btn btn-primary app-button-margin">
-              Update
-            </button>
-          </div>
-      </form>
-      </span>
-      <span *ngIf="isLoading">
-        <app-spinner></app-spinner>
-      </span>
-    </mat-card-content>
-  </mat-card>
+              <br>
+              <p class="app-subtitle-small">Profile header text:</p>
+              <div class="row">
+                <input
+                  placeholder="Profile header text"
+                  name="headerText"
+                  formControlName="headerText"
+                  class="form-control user-edit-input"
+                >
+              </div>
+
+              <div>
+                  <button mat-stroked-button type="button" (click)="filePicker.click()">Pick Image</button>
+                  <input type="file" #filePicker (change)="onImagePicked($event)">
+                </div>
+                <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && updateUserForm.get('userImage').valid">
+                  <img
+                  [src]="imagePreview"
+                  [alt]="updateUserForm.value.title"
+                  style="max-height: 200px; max-width: 200px;"
+                  class="rounded"
+                  >
+              </div>
+              <button type="button" (click)="onDeleteImage()">Delete Image</button>
+
+              <br>
+              <div class="row">
+                <button
+                type="submit"
+                class="btn btn-primary app-button-margin">
+                  Update
+                </button>
+              </div>
+          </form>
+          </span>
+          <span *ngIf="isLoading">
+            <app-spinner></app-spinner>
+          </span>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
 </div>

@@ -50,11 +50,31 @@
           </div>
         </div>
 
+        <div class="mb-1">
+          <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                  <fa-icon [icon]="faKey"></fa-icon>
+                </span>
+            </div>
+            <input
+            type="password"
+            name="repeatPassword"
+            class="form-control"
+            placeholder="Repeat password"
+            id="repeatPassword"
+            formControlName="repeatPassword"
+            >
+          </div>
+          <span class="app-form-warning" *ngIf="!passwordsMatch() && this.signupForm.get('password').touched && this.signupForm.get('repeatPassword').touched; else brLine">Passwords do not match.</span>
+          <ng-template #brLine><br></ng-template>
+        </div>
+
         <div class="d-flex flex-column mt-3">
           <button
           type="submit"
           class="btn btn-primary btn-lg"
-          [disabled]="!signupForm.valid || typedUserAlreadyExists || waitingCheck">
+          [disabled]="!signupForm.valid || typedUserAlreadyExists || waitingCheck || !passwordsMatch()">
             Join
           </button>
         </div>

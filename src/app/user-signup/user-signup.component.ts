@@ -26,7 +26,8 @@ export class UserSignupComponent implements OnInit {
   ngOnInit() {
     this.signupForm = new FormGroup({
       'username': new FormControl(null, [Validators.required, Validators.pattern('[\-\_a-zA-Z0-9\.]*')]),
-      'password': new FormControl(null, Validators.minLength(6)),
+      'password': new FormControl(null, [Validators.minLength(6)]),
+      'repeatPassword': new FormControl(null, Validators.minLength(6)),
     });
   }
 
@@ -56,6 +57,10 @@ export class UserSignupComponent implements OnInit {
       this.signupForm.value.username,
       this.signupForm.value.password);
 
+  }
+
+  passwordsMatch() {
+    return (this.signupForm.value.password === this.signupForm.value.repeatPassword);
   }
 
 }
