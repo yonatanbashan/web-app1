@@ -39,7 +39,7 @@ export class AuthService {
   }
 
   updateActiveUser() {
-    return this.http.get(this.serverAddress + 'api/users/byid/' + this.activeUserId)
+    return this.http.get(this.serverAddress + 'api/users/get/' + `?id=${this.activeUserId}`)
     .subscribe((response: any) => {
       this.user = response.user;
       this.user.id = response.user._id;

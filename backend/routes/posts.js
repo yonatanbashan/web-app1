@@ -5,17 +5,30 @@ const checkAuth = require('../middleware/check-auth');
 
 const PostController = require('../controllers/posts');
 
+
+// POST Requests
+
 // Add new post
 router.post('/new', checkAuth, PostController.addPost);
 
-// Retrieve all posts by specified user
-router.get('/user/:username', checkAuth, PostController.getUserPosts);
 
-// Retrieve all posts by current user
-router.post('', checkAuth, PostController.getMyPosts);
+
+
+
+// GET Requests
+
+// Retrieve all posts by specified username
+router.get('/user/:username', checkAuth, PostController.getPostsByUsername);
+
+// Retrieve all posts by current user (by ID)
+router.get('/all', checkAuth, PostController.getMyPosts);
 
 // Get feed posts
-router.post('/feed', checkAuth, PostController.getFeedPosts);
+router.get('/feed', checkAuth, PostController.getFeedPosts);
+
+
+
+// DELETE Requests
 
 // Delete post
 router.delete('/:id', checkAuth, PostController.deletePost);

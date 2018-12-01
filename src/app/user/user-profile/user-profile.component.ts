@@ -50,9 +50,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.posts = posts.sort(sortPostsByDate);
     });
 
-    this.username = this.route.snapshot.params['username'];
-    this.getUserPosts(this.username);
-    this.usersService.getUser(this.username).subscribe(this.acclaimUser);
     this.route.params.subscribe((params) => {
       this.userInfo = {};
       this.username = params['username'];

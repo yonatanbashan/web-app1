@@ -11,14 +11,9 @@ const extractFile = require("../middleware/file");
 
 // POST requests
 
-// Get all users which the current user is following
-router.post('/followed', checkAuth, UserController.getFollowedUsers);
 
 // Get users by search
 router.post('/find', checkAuth, UserController.searchUsers);
-
-// Retrieve user info
-router.post('/info', checkAuth, UserController.getUserInfo);
 
 // Add new user
 router.post('/add', UserController.addUser);
@@ -30,8 +25,15 @@ router.post('', UserController.loginUser);
 // GET requests
 
 // Fetch single user
-router.get('/byname/:username', checkAuth, UserController.getUser);
-router.get('/byid/:id', checkAuth, UserController.getUserById);
+router.get('/get', checkAuth, UserController.getUser);
+
+// Retrieve user info
+router.get('/info', checkAuth, UserController.getUserInfo);
+
+// Get all users which the current user is following
+router.get('/followed', checkAuth, UserController.getFollowedUsers);
+
+
 
 // PUT requests
 

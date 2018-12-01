@@ -32,12 +32,14 @@ export class UsersService {
     });
   }
 
-  getUser(name: string) {
-    return this.http.get(this.serverAddress + 'api/users/byname/' + name);
+  getUser(username: string) {
+    const params = `username=${username}`;
+    return this.http.get(this.serverAddress + 'api/users/get/?' + params);
   }
 
   getUserById(id: string) {
-    return this.http.get(this.serverAddress + 'api/users/byid/' + id);
+    const params = `id=${id}`;
+    return this.http.get(this.serverAddress + 'api/users/get/?' + params);
   }
 
   getUsers(name: string) {
@@ -77,16 +79,13 @@ export class UsersService {
   }
 
   getFollowedUsers() {
-    return this.http.post<{message: string, users: User[]}>(this.serverAddress + 'api/users/followed/', {})
+    return this.http.get<{message: string, users: User[]}>(this.serverAddress + 'api/users/followed/')
     .pipe(map(this.mapUsers));
   }
 
-  getUserInfo(name: string) {
-    const request = {
-      type: 'userInfo',
-      username: name
-    }
-    return this.http.post<{ message: string, userInfo: any}>(this.serverAddress + 'api/users/info/', request);
+  getUserInfo(username: string) {
+    const params = `?username=${username}`;
+    return this.http.get<{ message: string, userInfo: any}>(this.serverAddress + 'api/users/info/' + params);
   }
 
   updateUserInfo(info: any, image: File = null) {

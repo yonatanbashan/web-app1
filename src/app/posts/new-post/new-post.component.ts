@@ -23,7 +23,7 @@ export class NewPostComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.addPostForm = new FormGroup({
       'title': new FormControl(null, Validators.required),
-      'content': new FormControl(null),
+      'content': new FormControl(null, Validators.required),
     });
     this.isAuthSubs = this.authService.getAuthStatusListener().subscribe(isAuth => {
       if (!isAuth) {

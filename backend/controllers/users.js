@@ -25,7 +25,9 @@ exports.searchUsers = (req, res, next) => {
 };
 
 exports.getUserInfo = (req, res, next) => {
-  User.findOne({ username: req.body.username })
+
+
+  User.findOne({ username: req.query.username })
   .then(response => {
     res.status(200).json({
       message: 'User info for username "' + req.body.username + '" was sent back successfully!',
@@ -120,23 +122,24 @@ exports.loginUser = (req, res, next) => {
 };
 
 exports.getUser = (req, res, next) => {
-  User.findOne( { username: req.params.username })
-  .then((user) => {
-    res.status(201).json({
-      message: 'User fetched successfully!',
-      user: user
-    });
-  });
-};
 
-exports.getUserById = (req, res, next) => {
-  User.findById(req.params.id)
-  .then((user) => {
-    res.status(201).json({
-      message: 'User fetched successfully!',
-      user: user
+  if(req.query.id) {
+    User.findById(req.query.id)
+    .then((user) => {
+      res.status(201).json({
+        message: 'User fetched successfully!',
+        user: user
+      });
     });
-  });
+  } else if(req.query.username) {
+    User.findOne( { username: req.query.username })
+    .then((user) => {
+      res.status(201).json({
+        message: 'User fetched successfully!',
+        user: user
+      });
+    });
+  }
 };
 
 exports.updateUserInfo = (req, res, next) => {

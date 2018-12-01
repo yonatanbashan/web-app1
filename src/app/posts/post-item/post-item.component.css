@@ -24,6 +24,15 @@
   background-color: #eaebf5;
 }
 
+.post-content-bg-color {
+  background-color: #cfd2ec;
+  transition: 0.3s;
+}
+
+.post-content-bg-color:hover {
+  background-color: #DDDDFF;
+}
+
 .post-item {
   border-radius: 20px;
   padding: 20px;

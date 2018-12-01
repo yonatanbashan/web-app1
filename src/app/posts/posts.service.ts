@@ -39,7 +39,7 @@ export class PostsService {
   }
 
   getPosts() {
-    this.http.post<{message: string, posts: any}>(this.serverAddress + 'api/posts', {})
+    this.http.get<{message: string, posts: any}>(this.serverAddress + 'api/posts/all')
     .pipe(map(this.mapPosts))
     .subscribe((posts) => {
       this.postsUpdated.next(posts);
@@ -60,7 +60,6 @@ export class PostsService {
       .subscribe((responseData) => {
         this.getPosts();
       });
-
   }
 
   deletePost(postId) {
@@ -76,7 +75,7 @@ export class PostsService {
       content: content,
       postId: post.id
     };
-    return this.http.post(this.serverAddress + 'api/comments', request);
+    return this.http.post(this.serverAddress + 'api/comments/new', request);
   }
 
   mapComments = (commentData) => {
@@ -107,12 +106,9 @@ export class PostsService {
     return this.http.delete(this.serverAddress + 'api/comments/' + comment.id)
   }
 
-
-  getFeedPosts(amount: number) {
-    const request = {
-      amount: amount
-    }
-    return this.http.post(this.serverAddress + 'api/posts/feed/', request)
+  getFeedPosts(amount: number, offset: number) {
+    const params = `?amount=${amount}&offset=${offset}`;
+    return this.http.get(this.serverAddress + 'api/posts/feed/' + params)
     .pipe(map(this.mapPosts));
   }
 

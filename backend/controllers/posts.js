@@ -9,6 +9,7 @@ exports.addPost = (req, res, next) => {
     creator: req.userData.userId,
     comments: []
   });
+  console.log(req.body);
   post.save().then(createdPost => {
     res.status(201).json({
       message: 'Post added successfully',
@@ -17,7 +18,20 @@ exports.addPost = (req, res, next) => {
   });
 };
 
-exports.getUserPosts = (req, res, next) => {
+
+exports.getMyPosts = (req, res, next) => {
+  Post.find({ creator: req.userData.userId })
+  .then(documents => {
+    res.status(200).json(
+      {
+        message: 'Posts fetched successfully!',
+        posts: documents
+      }
+    );
+  });
+};
+
+exports.getPostsByUsername = (req, res, next) => {
   // Search the user's ID, and then search posts by this ID
   User.findOne({ username: req.params.username })
   .then((user) => {
@@ -56,25 +70,30 @@ exports.getFeedPosts = (req, res, next) => {
     posts.sort((a,b) => {
       return new Date(b.createDate) - new Date(a.createDate);
     });
-    posts = posts.slice(0, req.body.amount);
+    const amount = +req.query.amount;
+
+    let offset;
+    if(req.query.offset !== undefined) {
+      offset = +req.query.offset;
+    } else {
+      offset = 0;
+    }
+
+    if( (amount + offset + 1) >= posts.length) {
+      posts = posts.slice(offset);
+    } else {
+      posts = posts.slice(offset, amount);
+    }
+
     res.status(200).json({
       message: 'Followed posts fetched successfully',
+      minPost: offset,
+      maxPost: offset + amount - 1,
       posts: posts
     });
   })
 };
 
-exports.getMyPosts = (req, res, next) => {
-  Post.find({ creator: req.userData.userId })
-  .then(documents => {
-    res.status(200).json(
-      {
-        message: 'Posts fetched successfully!',
-        posts: documents
-      }
-    );
-  });
-};
 
 exports.deletePost = (req, res, next) => {
   //console.log(req.body);

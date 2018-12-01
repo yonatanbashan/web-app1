@@ -6,12 +6,16 @@
       <div class="date-text">{{ post.formattedDate }}{{ authorText }}</div>
     </div>
   </div>
-  <hr>
-  <div class="post-text-content" [innerHtml]="post.content | newline"></div>
+
   </span>
   <div class="row">
       <span *ngIf="fullDisplay && ! isLoadingComments" style="width:100vw;">
-        <hr><br>
+        <mat-card class="p-3 mx-3 my-4 post-content-bg-color shadow border" >
+          <mat-card-content>
+            <div class="post-text-content" [innerHtml]="post.content | newline"></div>
+          </mat-card-content>
+        </mat-card>
+
         <form [formGroup]="commentForm" (ngSubmit)="onSubmitComment()">
           <textarea
             *ngIf="canComment()"
@@ -44,7 +48,7 @@
         <div *ngFor="let comment of comments">
           <div class="flex-container">
             <span class="col-md-2 col-md-offset-6">
-            <a [routerLink]="['/user', comment.creatorName]">#{{ comment.creatorName }}:</a>
+            <a [routerLink]="['/user', comment.creatorName]"><strong>#{{ comment.creatorName }}:</strong></a>
             <div class="date-text">{{ comment.formattedDate }}</div>
             </span>
             <span class="col-md-8 col-md-offset-6">

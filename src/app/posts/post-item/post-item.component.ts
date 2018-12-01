@@ -5,14 +5,14 @@ import { AuthService } from '../../auth/auth.service';
 import { PostsService } from './../posts.service';
 import { Post } from '../../models/post.model';
 import { Comment } from '../../models/comment.model';
-import { Component, OnInit, Input, ViewChild, ElementRef, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-post-item',
   templateUrl: './post-item.component.html',
   styleUrls: ['./post-item.component.css']
 })
-export class PostItemComponent implements OnInit, OnChanges {
+export class PostItemComponent implements OnInit {
 
   @Input() post: Post;
   @Input() userId: string;
@@ -34,10 +34,7 @@ export class PostItemComponent implements OnInit, OnChanges {
     this.commentForm = new FormGroup({
       'content': new FormControl(null, Validators.required),
     });
-    this.usersService.getUserById(this.userId).subscribe(this.acclaimUser);
-  }
-
-  ngOnChanges() {
+    this.authorText = '';
     this.usersService.getUserById(this.userId).subscribe(this.acclaimUser);
   }
 
