@@ -129,8 +129,22 @@ exports.getUser = (req, res, next) => {
   });
 };
 
+exports.getUserById = (req, res, next) => {
+  User.findById(req.params.id)
+  .then((user) => {
+    res.status(201).json({
+      message: 'User fetched successfully!',
+      user: user
+    });
+  });
+};
+
 exports.updateUserInfo = (req, res, next) => {
-  User.findByIdAndUpdate(req.userData.userId, { userInfo: req.body.userInfo } )
+  let userInfo = req.body;
+  if(req.body.image !== null) {
+    userInfo.image = null;
+  }
+  User.findByIdAndUpdate(req.userData.userId, { userInfo: userInfo } )
   .then(response => {
     res.status(200).json({
       message: 'User info updated successfully!'
@@ -174,4 +188,14 @@ exports.deleteUser = (req, res, next) => {
       console.log('User with id ' + req.params.id + ' deleted!')
       res.status(200).json({message: 'User deleted!'});
     });
+};
+
+
+// Admin utilities
+
+exports.pingRequest = (req, res, next) => {
+  res.status(201).json({
+    message: 'Ping successful!',
+    request: req.body
+  })
 };

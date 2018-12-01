@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -27,6 +28,7 @@ mongoose.connect(connectAddress)
 
 // Add body parser for JSON requests. Adds 'body' field for req parameters.
 app.use(bodyParser.json());
+app.use("/images", express.static(path.join("backend/images")));
 
 // Access control: to avoid CORS errors
 app.use((req, res, next) => {

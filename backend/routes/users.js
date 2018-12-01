@@ -5,7 +5,7 @@ const checkAuth = require('../middleware/check-auth');
 
 const User = require('../models/user');
 const UserController = require('../controllers/users');
-
+const extractFile = require("../middleware/file");
 
 // User handling
 
@@ -27,18 +27,16 @@ router.post('/add', UserController.addUser);
 router.post('', UserController.loginUser);
 
 
-
 // GET requests
 
 // Fetch single user
-router.get('/:username', checkAuth, UserController.getUser);
-
-
+router.get('/byname/:username', checkAuth, UserController.getUser);
+router.get('/byid/:id', checkAuth, UserController.getUserById);
 
 // PUT requests
 
 // Update user info
-router.put('/info', checkAuth, UserController.updateUserInfo);
+router.put('/info', checkAuth, extractFile, UserController.updateUserInfo);
 
 // Add/remove follower to user
 router.put('/:id', checkAuth, UserController.modifyFollow);
@@ -47,6 +45,14 @@ router.put('/:id', checkAuth, UserController.modifyFollow);
 
 // DELETE requests
 
+// Delete user
 router.delete('/:id', checkAuth, UserController.deleteUser);
+
+
+
+
+// ADMIN utilities
+router.post('/admin', checkAuth, UserController.pingRequest);
+
 
 module.exports = router;

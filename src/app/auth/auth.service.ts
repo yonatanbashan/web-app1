@@ -6,6 +6,8 @@ import { Injectable } from '@angular/core';
 import * as jwt_decode from 'jwt-decode';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { User } from '../models/user.model';
+import { UsersService } from '../users.service';
 
 
 @Injectable()
@@ -22,7 +24,7 @@ export class AuthService {
   private tokenTimer: any;
 
   private authStatusListener = new Subject<boolean>();
-
+  private user: User = null;
 
   constructor(private http: HttpClient,
     private connectionService: ConnectionService,
@@ -36,12 +38,25 @@ export class AuthService {
     }
   }
 
+  updateActiveUser() {
+    return this.http.get(this.serverAddress + 'api/users/byid/' + this.activeUserId)
+    .subscribe((response: any) => {
+      this.user = response.user;
+      this.user.id = response.user._id;
+    });
+  }
+
+
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
   }
 
   getToken() {
     return this.token;
+  }
+
+  getActiveUserObject() {
+    return this.user;
   }
 
   getActiveUser() {
@@ -98,8 +113,10 @@ export class AuthService {
           this.activeUserId = decodedToken.id;
           this.authStatusListener.next(true);
           this.userExist = true;
+          this.updateActiveUser();
         } else {
           this.activeUser = null;
+          this.user = null;
         }
       }
     }, (error) => {
@@ -147,6 +164,7 @@ export class AuthService {
   logout() {
     this.activeUser = null;
     this.activeUserId = null;
+    this.user = null;
     this.token = null;
     this.authStatusListener.next(false);
     clearTimeout(this.tokenTimer);
@@ -196,6 +214,7 @@ export class AuthService {
       this.userExist = true;
       this.setAuthTimer(expiresIn / 1000);
       this.authStatusListener.next(true);
+      this.updateActiveUser();
     }
   }
 

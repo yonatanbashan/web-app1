@@ -30,6 +30,7 @@ import { FindComponent } from './find/find.component';
 import { UsersService } from './users.service';
 import { ActionBarComponent } from './user/user-profile/action-bar/action-bar.component';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
+import { FeedComponent } from './feed/feed.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { UserEditComponent } from './user/user-edit/user-edit.component';
     UserProfileComponent,
     FindComponent,
     ActionBarComponent,
-    UserEditComponent
+    UserEditComponent,
+    FeedComponent
   ],
   imports: [
     BrowserModule,

@@ -40,6 +40,30 @@ exports.getUserPosts = (req, res, next) => {
   });
 };
 
+exports.getFeedPosts = (req, res, next) => {
+  let followedIds = [];
+  User.find( { followers: {$in: [req.userData.userId]} })
+  .then(users => {
+    users.forEach(user => {
+      followedIds.push(user._id);
+    });
+    return;
+  })
+  .then(() =>{
+    return Post.find( {creator: { $in: followedIds} });
+  })
+  .then(posts => {
+    posts.sort((a,b) => {
+      return new Date(b.createDate) - new Date(a.createDate);
+    });
+    posts = posts.slice(0, req.body.amount);
+    res.status(200).json({
+      message: 'Followed posts fetched successfully',
+      posts: posts
+    });
+  })
+};
+
 exports.getMyPosts = (req, res, next) => {
   Post.find({ creator: req.userData.userId })
   .then(documents => {

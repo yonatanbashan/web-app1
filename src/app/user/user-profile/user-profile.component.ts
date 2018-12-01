@@ -8,6 +8,7 @@ import { Post } from 'src/app/models/post.model';
 import { sortPostsByDate } from 'src/app/common'
 import { AuthService } from 'src/app/auth/auth.service';
 import { dateFormat } from 'src/app/common';
+import { IRequest } from 'src/app/common/irequest';
 
 @Component({
   selector: 'app-user-profile',
@@ -76,6 +77,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.prepareUserInfo();
       this.isLoadingInfo = false;
     });
+
 
   }
 

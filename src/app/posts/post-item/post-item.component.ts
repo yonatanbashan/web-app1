@@ -1,27 +1,31 @@
+import { UsersService } from './../../users.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from './../../models/user.model';
 import { AuthService } from '../../auth/auth.service';
 import { PostsService } from './../posts.service';
 import { Post } from '../../models/post.model';
 import { Comment } from '../../models/comment.model';
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-post-item',
   templateUrl: './post-item.component.html',
   styleUrls: ['./post-item.component.css']
 })
-export class PostItemComponent implements OnInit {
+export class PostItemComponent implements OnInit, OnChanges {
 
   @Input() post: Post;
-  @Input() user: User;
+  @Input() userId: string;
+  user: User;
   fullDisplay = false;
   comments: Comment[] = [];
   isLoadingComments = false;
+  authorText = '';
   @ViewChild('commentInput') commentInput: ElementRef;
 
   constructor(
     private postsService: PostsService,
+    private usersService: UsersService,
     private authService: AuthService) { }
     commentForm: FormGroup;
 
@@ -30,6 +34,17 @@ export class PostItemComponent implements OnInit {
     this.commentForm = new FormGroup({
       'content': new FormControl(null, Validators.required),
     });
+    this.usersService.getUserById(this.userId).subscribe(this.acclaimUser);
+  }
+
+  ngOnChanges() {
+    this.usersService.getUserById(this.userId).subscribe(this.acclaimUser);
+  }
+
+  acclaimUser = (response: any) => {
+    this.user = response.user;
+    this.user.id = response.user._id;
+    this.authorText = ', by ' + this.user.username;
   }
 
   onSubmitComment() {

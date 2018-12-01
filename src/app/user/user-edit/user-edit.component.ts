@@ -78,7 +78,7 @@ export class UserEditComponent implements OnInit {
       birthDate: this.date.toDateString(),
     };
     this.isLoading = true;
-    this.usersService.updateUserInfo(info);
+    this.usersService.updateUserInfo(info, this.updateUserForm.value.userImage);
   }
 
   dateChangedEvent(event: MatDatepickerInputEvent<Date>) {

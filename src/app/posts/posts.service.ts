@@ -107,4 +107,13 @@ export class PostsService {
     return this.http.delete(this.serverAddress + 'api/comments/' + comment.id)
   }
 
+
+  getFeedPosts(amount: number) {
+    const request = {
+      amount: amount
+    }
+    return this.http.post(this.serverAddress + 'api/posts/feed/', request)
+    .pipe(map(this.mapPosts));
+  }
+
 }

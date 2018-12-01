@@ -1,3 +1,4 @@
+import { FeedComponent } from './feed/feed.component';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
 import { FindComponent } from './find/find.component';
 import { AuthGuard } from './auth/auth.guard';
@@ -14,6 +15,7 @@ const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'signup', component: UserSignupComponent },
   { path: 'find', component: FindComponent, canActivate: [AuthGuard] },
+  { path: 'feed', component: FeedComponent, canActivate: [AuthGuard] },
   { path: 'user-edit', component: UserEditComponent, canActivate: [AuthGuard] },
   { path: 'user/:username', component: UserProfileComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: 'home', pathMatch: 'full'}

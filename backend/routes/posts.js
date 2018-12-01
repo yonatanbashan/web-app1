@@ -14,6 +14,9 @@ router.get('/user/:username', checkAuth, PostController.getUserPosts);
 // Retrieve all posts by current user
 router.post('', checkAuth, PostController.getMyPosts);
 
+// Get feed posts
+router.post('/feed', checkAuth, PostController.getFeedPosts);
+
 // Delete post
 router.delete('/:id', checkAuth, PostController.deletePost);
 
