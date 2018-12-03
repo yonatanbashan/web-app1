@@ -7,16 +7,29 @@
     </div>
     <div class="col-10 px-5">
       <div class="pt-md-5 pb-md-4 mx-auto text-center">
-        <div class="container-fluid d-flex justify-content-center">
-            <div class="user-profile-title" *ngIf="!error">
-                #{{ username }}
+        <div class="row d-flex align-items-center justify-content-center">
+          <div class="user-profile-title" *ngIf="!error">
+              #{{ username }}
+          </div>
+        </div>
+        <span *ngIf="!isFollowed && !isMe && !pendingFollow && !isLoadingUser">
+          <div class="row d-flex justify-content-center">
+            <div class="col-1">
+              <button class="my-3 btn btn-info follow-button" (click)="followUser()">Follow</button>
             </div>
-            <span *ngIf="!isFollowed && !isMe && !pendingFollow && !isLoadingUser">
-              <button class="mx-5 my-3 btn btn-info follow-button" (click)="followUser()">Follow</button>
-            </span>
-            <span *ngIf="isFollowed && !isMe && !pendingFollow && !isLoadingUser">
-              <button class="mx-5 my-3 btn follow-button" (click)="unfollowUser()">Unfollow</button>
-            </span>
+          </div>
+        </span>
+        <span *ngIf="isFollowed && !isMe && !pendingFollow && !isLoadingUser">
+          <div class="row d-flex justify-content-center">
+            <div class="col-1">
+              <button class="my-3 btn follow-button" (click)="unfollowUser()">Unfollow</button>
+            </div>
+          </div>
+        </span>
+        <div class="row d-flex justify-content-center">
+          <div class="col-3" *ngIf="userInfo.profileImagePath">
+            <img class="rounded" [src]="userInfo.profileImagePath" alt="" style="max-height: 150px; max-width: 150px;">
+          </div>
         </div>
       </div>
 

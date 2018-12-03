@@ -74,6 +74,10 @@ export class UsersService {
     return false;
   }
 
+  deleteUserImage() {
+    return this.http.delete(this.serverAddress + 'api/users/image/');
+  }
+
   isMe(user: User) {
     return user.id === this.authService.getActiveUserId();
   }
@@ -90,20 +94,20 @@ export class UsersService {
 
   updateUserInfo(info: any, image: File = null) {
 
-    let imageData: FormData;
-    if(image !== null) {
-      imageData = new FormData();
+    let imageData = new FormData();
+    if(image !== null && image !== undefined) {
       imageData.append("image", image);
     }
 
-    const request = {
-      headerText: info.headerText,
-      hideDate: info.hideDate,
-      birthDate: info.birthDate,
-      image: imageData
-    };
+    imageData.append("headerText", info.headerText);
+    imageData.append("hideDate", info.hideDate);
+    imageData.append("birthDate", info.birthDate);
 
-    return this.http.put(this.serverAddress + 'api/users/info/', request)
+    if(info.profileImagePath !== undefined) {
+      imageData.append("profileImagePath", info.profileImagePath);
+    }
+
+    return this.http.put(this.serverAddress + 'api/users/info/', imageData)
     .subscribe(responseData => {
       this.router.navigate(['/user', this.authService.getActiveUser()]);
     });

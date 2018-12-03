@@ -48,8 +48,9 @@ router.put('/:id', checkAuth, UserController.modifyFollow);
 // DELETE requests
 
 // Delete user
-router.delete('/:id', checkAuth, UserController.deleteUser);
+router.delete('/image', checkAuth, UserController.deleteUserProfileImage)
 
+router.delete('/:id', checkAuth, UserController.deleteUser);
 
 
 

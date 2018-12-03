@@ -1,3 +1,4 @@
+const fs = require('fs');
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -143,9 +144,11 @@ exports.getUser = (req, res, next) => {
 };
 
 exports.updateUserInfo = (req, res, next) => {
+  const url = req.protocol + "://" + req.get("host");
   let userInfo = req.body;
-  if(req.body.image !== null) {
-    userInfo.image = null;
+  if(req.file !== undefined) {
+    userInfo.image = undefined;
+    userInfo.profileImagePath = url + "/images/" + req.file.filename;
   }
   User.findByIdAndUpdate(req.userData.userId, { userInfo: userInfo } )
   .then(response => {
@@ -192,6 +195,26 @@ exports.deleteUser = (req, res, next) => {
       res.status(200).json({message: 'User deleted!'});
     });
 };
+
+exports.deleteUserProfileImage = (req, res, next) => {
+  User.findById(req.userData.userId)
+  .then(user => {
+    let userInfo = user.userInfo;
+    if(userInfo.profileImagePath) {
+      userInfo.profileImagePath = undefined;
+    }
+    return userInfo;
+  })
+  .then(userInfo => {
+    return User.findByIdAndUpdate(req.userData.userId, { userInfo: userInfo })
+  })
+  .then(() => {
+    res.status(201).json({
+      message: 'Photo deleted successfully!'
+    });
+  });
+};
+
 
 
 // Admin utilities

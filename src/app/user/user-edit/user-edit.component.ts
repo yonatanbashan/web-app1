@@ -31,17 +31,22 @@ export class UserEditComponent implements OnInit {
   headerText: string = '';
   hideDate: boolean = false;
   isLoading: boolean;
+  isDeletingImage = false;
   userInfo: any = {};
 
   ngOnInit() {
     this.isLoading = true;
     this.usersService.getUserInfo(this.authService.getActiveUser())
-    .subscribe((response) => {
+    .subscribe(this.processUserInfoResponse);
+  }
 
-      this.userInfo = response.userInfo;
-      this.initUserInfo();
-      this.isLoading = false;
-    });
+  processUserInfoResponse = (response) => {
+    this.userInfo = response.userInfo;
+    this.initUserInfo();
+    this.isLoading = false;
+    if(this.userInfo.profileImagePath) {
+      this.imagePreview = this.userInfo.profileImagePath;
+    }
   }
 
   initUserInfo() {
@@ -72,11 +77,18 @@ export class UserEditComponent implements OnInit {
   onSubmit() {
     this.headerText = this.updateUserForm.value.headerText;
     this.hideDate = this.updateUserForm.value.hideDate;
-    const info = {
+    let info = {
       headerText: this.headerText,
       hideDate: this.hideDate,
       birthDate: this.date.toDateString(),
+      profileImagePath: undefined
     };
+
+    if( (this.userInfo.profileImagePath !== undefined) &&
+        !this.updateUserForm.value.userImage) {
+      info.profileImagePath = this.userInfo.profileImagePath;
+    }
+
     this.isLoading = true;
     this.usersService.updateUserInfo(info, this.updateUserForm.value.userImage);
   }
@@ -101,9 +113,14 @@ export class UserEditComponent implements OnInit {
   }
 
   onDeleteImage() {
-    this.imagePreview = '';
-    this.updateUserForm.patchValue({ 'userImage': null });
-    this.filePicker.nativeElement.value = null;
+    this.isDeletingImage = true;
+    this.usersService.deleteUserImage()
+    .subscribe(response => {
+      this.ngOnInit();
+      this.isDeletingImage = false;
+      this.imagePreview = '';
+      this.updateUserForm.patchValue({ 'userImage': null });
+    });
   }
 
 

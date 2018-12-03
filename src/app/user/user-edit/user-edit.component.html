@@ -46,12 +46,14 @@
                   class="form-control user-edit-input"
                 >
               </div>
-
-              <div>
-                  <button mat-stroked-button type="button" (click)="filePicker.click()">Pick Image</button>
-                  <input type="file" #filePicker (change)="onImagePicked($event)">
-                </div>
-                <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && updateUserForm.get('userImage').valid">
+              <span *ngIf="!isDeletingImage; else spinner">
+              <div class="row my-2">
+                <button mat-stroked-button type="button" class="btn btn-outline-primary btn-sm mx-1" (click)="filePicker.click()">Pick Image</button>
+                <input type="file" #filePicker (change)="onImagePicked($event)" hidden>
+                <button class="btn btn-outline-dark btn-sm mx-1" type="button" (click)="onDeleteImage()">Delete Image</button>
+              </div>
+              <div class="row">
+              <div class="mx-0 px-0" *ngIf="imagePreview !== '' && imagePreview">
                   <img
                   [src]="imagePreview"
                   [alt]="updateUserForm.value.title"
@@ -59,7 +61,11 @@
                   class="rounded"
                   >
               </div>
-              <button type="button" (click)="onDeleteImage()">Delete Image</button>
+              </div>
+              </span>
+              <ng-template #spinner>
+                <app-spinner></app-spinner>
+              </ng-template>
 
               <br>
               <div class="row">
