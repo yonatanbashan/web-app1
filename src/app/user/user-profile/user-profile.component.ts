@@ -61,7 +61,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.username = params['username'];
       this.getUserPosts(this.username);
       this.userInitialize(this.username);
-      this.usersService.getUser(this.username).subscribe(this.acclaimUser);;
+      this.usersService.getUser(this.username).subscribe(this.acclaimUser);
       this.isLoadingInfo = true;
       this.usersService.getUserInfo(this.username)
       .subscribe((response) => {
