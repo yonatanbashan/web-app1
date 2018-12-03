@@ -36,13 +36,18 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   // UserInfo-related
   isLoadingInfo: boolean = false;
+  isLoadingUser: boolean = true;
   userInfo: any = {};
   birthDayText: string = '';
   hideDate: boolean = true;
   headerText: string ='';
   showInfo: boolean = false;
 
+  pendingFollow: boolean;
+  isFollowed: boolean;
+
   ngOnInit() {
+
 
     // Listen to changes from the posts service subject
     this.postsListenerSubs = this.postsService.getPostUpdateListener()
@@ -51,6 +56,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     });
 
     this.route.params.subscribe((params) => {
+      this.isLoadingUser = true;
       this.userInfo = {};
       this.username = params['username'];
       this.getUserPosts(this.username);
@@ -74,14 +80,29 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.prepareUserInfo();
       this.isLoadingInfo = false;
     });
-
-
   }
 
   ngOnDestroy() {
     this.postsListenerSubs.unsubscribe();
   }
 
+  followUser() {
+    this.pendingFollow = true;
+    this.usersService.followUser(this.user.id)
+    .subscribe(() => {
+      this.isFollowed = !this.isFollowed;
+      this.pendingFollow = false;
+    })
+  }
+
+  unfollowUser() {
+    this.pendingFollow = true;
+    this.usersService.unfollowUser(this.user.id)
+    .subscribe(() => {
+      this.isFollowed = !this.isFollowed;
+      this.pendingFollow = false;
+    })
+  }
 
   private prepareUserInfo() {
     if (this.userInfo.birthDate) {
@@ -112,6 +133,14 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       followers: response.user.followers,
       userInfo: {}
     };
+
+    this.isLoadingUser = false;
+    if(this.user.followers.includes(this.authService.getActiveUserId())) {
+      this.isFollowed = true;
+    } else {
+      this.isFollowed = false;
+    }
+
   }
 
   private getUserPosts(username: string) {
