@@ -2,6 +2,7 @@ const fs = require('fs');
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const appConfig = require('../common/app-config');
 
 exports.getFollowedUsers = (req, res, next) => {
   User.find( { followers: {$in: [req.userData.userId]} })
@@ -144,11 +145,11 @@ exports.getUser = (req, res, next) => {
 };
 
 exports.updateUserInfo = (req, res, next) => {
-  const url = req.protocol + "://" + req.get("host");
+  const url = appConfig.AWSAddress;
   let userInfo = req.body;
   if(req.file !== undefined) {
     userInfo.image = undefined;
-    userInfo.profileImagePath = url + "/images/" + req.file.filename;
+    userInfo.profileImagePath = url + '/' + req.file.key;
   }
   User.findByIdAndUpdate(req.userData.userId, { userInfo: userInfo } )
   .then(response => {

@@ -23,6 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule, MatProgressSpinnerModule, MatNativeDateModule, MatIconModule, MatCheckboxModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { SpinnerComponent } from './common/spinner/spinner.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
@@ -31,6 +32,7 @@ import { UsersService } from './users.service';
 import { ActionBarComponent } from './user/user-profile/action-bar/action-bar.component';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
 import { FeedComponent } from './feed/feed.component';
+import { PhotoViewComponent } from './photo-view/photo-view.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import { FeedComponent } from './feed/feed.component';
     FindComponent,
     ActionBarComponent,
     UserEditComponent,
-    FeedComponent
+    FeedComponent,
+    PhotoViewComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +65,7 @@ import { FeedComponent } from './feed/feed.component';
     MatIconModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
+    MatDialogModule,
     BrowserAnimationsModule,
     FontAwesomeModule
   ],
@@ -72,6 +76,9 @@ import { FeedComponent } from './feed/feed.component';
     UsersService,
     MatDatepickerModule,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
+    entryComponents: [
+      PhotoViewComponent
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

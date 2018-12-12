@@ -5,45 +5,55 @@
         <app-action-bar></app-action-bar>
       </div>
     </div>
+
+
     <div class="col-10 px-5">
-      <div class="pt-md-5 pb-md-4 mx-auto text-center">
-        <div class="row d-flex align-items-center justify-content-center">
-          <div class="user-profile-title" *ngIf="!error">
-              #{{ username }}
-          </div>
-        </div>
-        <span *ngIf="!isFollowed && !isMe && !pendingFollow && !isLoadingUser">
-          <div class="row d-flex justify-content-center">
-            <div class="col-1">
-              <button class="my-3 btn btn-info follow-button" (click)="followUser()">Follow</button>
-            </div>
-          </div>
-        </span>
-        <span *ngIf="isFollowed && !isMe && !pendingFollow && !isLoadingUser">
-          <div class="row d-flex justify-content-center">
-            <div class="col-1">
-              <button class="my-3 btn follow-button" (click)="unfollowUser()">Unfollow</button>
-            </div>
-          </div>
-        </span>
-        <div class="row d-flex justify-content-center">
-          <div class="col-3" *ngIf="userInfo.profileImagePath">
-            <img class="rounded" [src]="userInfo.profileImagePath" alt="" style="max-height: 150px; max-width: 150px;">
-          </div>
+      <div class="row">
+        <div class="col-8 offset-2">
+          <mat-card class="p-0 p-sm-5 m-0 m-sm-5 rounded shadow-lg" >
+            <mat-card-content>
+              <div class="pt-md-5 pb-md-4 mx-auto text-center">
+                <div class="row d-flex align-items-center justify-content-center">
+                  <div class="user-profile-title" *ngIf="!error">
+                      #{{ username }}
+                  </div>
+                </div>
+                <span *ngIf="!isFollowed && !isMe && !pendingFollow && !isLoadingUser">
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-1">
+                      <button class="my-3 btn btn-info follow-button" (click)="followUser()">Follow</button>
+                    </div>
+                  </div>
+                </span>
+                <span *ngIf="isFollowed && !isMe && !pendingFollow && !isLoadingUser">
+                  <div class="row d-flex justify-content-center">
+                    <div class="col-1">
+                      <button class="my-3 btn follow-button" (click)="unfollowUser()">Unfollow</button>
+                    </div>
+                  </div>
+                </span>
+                <div class="row d-flex justify-content-center">
+                  <div class="col-3" *ngIf="userInfo.profileImagePath">
+                    <img class="profile-photo rounded" [src]="userInfo.profileImagePath" alt="" style="max-height: 150px; max-width: 150px;" (click)="photoViewOpen(userInfo.profileImagePath)">
+                  </div>
+                </div>
+              </div>
+              <div class="text-center" *ngIf="!isLoadingInfo">
+                  <div class="user-header-text" *ngIf="headerText !== ''">
+                      {{ headerText }}
+                  </div>
+                  <div class="app-subtitle-small" *ngIf="birthDayText !== '' && !hideDate">
+                      Birthday: {{ birthDayText }}
+                  </div>
+                </div>
+                <span *ngIf="isLoadingInfo">
+                  <app-spinner></app-spinner>
+                </span>
+            </mat-card-content>
+          </mat-card>
         </div>
       </div>
 
-      <div class="text-center" *ngIf="!isLoadingInfo">
-        <div class="user-header-text" *ngIf="headerText !== ''">
-            {{ headerText }}
-        </div>
-        <div class="app-subtitle-small" *ngIf="birthDayText !== '' && !hideDate">
-            Birthday: {{ birthDayText }}
-        </div>
-      </div>
-      <span *ngIf="isLoadingInfo">
-        <app-spinner></app-spinner>
-      </span>
       <br>
       <br>
       <span *ngIf="!isLoading && !error">

@@ -20,6 +20,16 @@
   transition: 0.2s;
 }
 
+.profile-photo {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.profile-photo:hover {
+  -webkit-filter: opacity(70%);
+  filter: opacity(70%);
+}
+
 .action-bar:hover {
   background-color: #eaebf5;
 }

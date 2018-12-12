@@ -1,3 +1,5 @@
+import { PhotoViewComponent } from './../../photo-view/photo-view.component';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { UsersService } from 'src/app/users.service';
@@ -21,7 +23,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private usersService: UsersService,
     private postsService: PostsService,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public dialog: MatDialog
   ) { }
 
   isLoading: boolean;
@@ -102,6 +105,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.isFollowed = !this.isFollowed;
       this.pendingFollow = false;
     })
+  }
+
+  photoViewOpen(profileImagePath) {
+    let dialogRef = this.dialog.open(PhotoViewComponent, {
+      data: { imagePath: profileImagePath },
+    });
   }
 
   private prepareUserInfo() {

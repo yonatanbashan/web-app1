@@ -5,7 +5,7 @@ const checkAuth = require('../middleware/check-auth');
 
 const User = require('../models/user');
 const UserController = require('../controllers/users');
-const extractFile = require("../middleware/file");
+const uploadFile = require("../middleware/file");
 
 // User handling
 
@@ -38,7 +38,7 @@ router.get('/followed', checkAuth, UserController.getFollowedUsers);
 // PUT requests
 
 // Update user info
-router.put('/info', checkAuth, extractFile, UserController.updateUserInfo);
+router.put('/info', checkAuth, uploadFile.single('image'), UserController.updateUserInfo);
 
 // Add/remove follower to user
 router.put('/:id', checkAuth, UserController.modifyFollow);
