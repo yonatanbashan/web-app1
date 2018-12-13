@@ -1,4 +1,4 @@
-# BlogsApp
+# Bloggism
 
 This app is a simple social network.
 It was done as an exercise in full stack development.
