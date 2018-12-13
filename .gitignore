@@ -1,5 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# To prevent exposing sensitive information on github
+*app-config.js
+
 # compiled output
 /dist
 /tmp
