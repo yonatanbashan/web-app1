@@ -1,7 +1,12 @@
 <div class="post-item" [ngClass]="{'post-item-colored': fullDisplay}">
   <span (click)="toggleDisplay()" style="cursor: pointer;">
-  <div class="row">
-    <div class="col-md-10 col-md-offset-1">
+  <div class="row align-items-center">
+    <div class="col-1" *ngIf="userInfo.profileImagePath">
+      <div class="row justify-content-center align-items-center">
+        <img class="user-avatar" [src]="userInfo.profileImagePath">
+      </div>
+    </div>
+    <div class="col-11">
       <div class="post-title">{{ post.title }}</div>
       <div class="date-text">{{ post.formattedDate }}{{ authorText }}</div>
     </div>
@@ -48,11 +53,11 @@
         <div *ngFor="let comment of comments">
           <div class="flex-container">
             <span class="col-md-2 col-md-offset-6">
-            <a [routerLink]="['/user', comment.creatorName]"><strong>#{{ comment.creatorName }}:</strong></a>
-            <div class="date-text">{{ comment.formattedDate }}</div>
+              <a [routerLink]="['/user', comment.creatorName]"><strong>#{{ comment.creatorName }}:</strong></a>
+              <div class="date-text">{{ comment.formattedDate }}</div>
             </span>
             <span class="col-md-8 col-md-offset-6">
-            <div class="h-margin comment-text-content" [innerHtml]="comment.content | newline"></div>
+              <div class="h-margin comment-text-content" [innerHtml]="comment.content | newline"></div>
             </span>
             <button
               class="btn btn-outline-secondary delete-comment-button"

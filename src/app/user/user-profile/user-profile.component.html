@@ -19,16 +19,24 @@
                   </div>
                 </div>
                 <span *ngIf="!isFollowed && !isMe && !pendingFollow && !isLoadingUser">
-                  <div class="row d-flex justify-content-center">
-                    <div class="col-1">
+                  <div class="row justify-content-center">
+                    <div class="col-2">
                       <button class="my-3 btn btn-info follow-button" (click)="followUser()">Follow</button>
                     </div>
                   </div>
                 </span>
                 <span *ngIf="isFollowed && !isMe && !pendingFollow && !isLoadingUser">
-                  <div class="row d-flex justify-content-center">
-                    <div class="col-1">
+                  <div class="row justify-content-center">
+                    <div class="col-2">
                       <button class="my-3 btn follow-button" (click)="unfollowUser()">Unfollow</button>
+                    </div>
+                  </div>
+                </span>
+                <!-- To keep button space while pending follow/unfollow -->
+                <span *ngIf="pendingFollow">
+                  <div class="row justify-content-center">
+                    <div class="col-2">
+                      <button class="my-3 btn follow-button" style="visibility: hidden;">Unfollow</button>
                     </div>
                   </div>
                 </span>

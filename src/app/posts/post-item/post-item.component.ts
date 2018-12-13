@@ -17,6 +17,7 @@ export class PostItemComponent implements OnInit {
   @Input() post: Post;
   @Input() userId: string;
   user: User;
+  userInfo: any;
   fullDisplay = false;
   comments: Comment[] = [];
   isLoadingComments = false;
@@ -41,6 +42,7 @@ export class PostItemComponent implements OnInit {
   acclaimUser = (response: any) => {
     this.user = response.user;
     this.user.id = response.user._id;
+    this.userInfo = this.user.userInfo;
     this.authorText = ', by ' + this.user.username;
   }
 

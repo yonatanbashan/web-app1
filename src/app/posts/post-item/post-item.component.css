@@ -4,6 +4,11 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.user-avatar {
+  max-width: 4em;
+  max-height: 4em;
+}
+
 .comment-text-content {
   font-size: 1em;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
