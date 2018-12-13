@@ -17,7 +17,9 @@ export class PostItemComponent implements OnInit {
   @Input() post: Post;
   @Input() userId: string;
   user: User;
-  userInfo: any;
+  userInfo: any = {
+    profileImagePath: ''
+  };
   fullDisplay = false;
   comments: Comment[] = [];
   isLoadingComments = false;

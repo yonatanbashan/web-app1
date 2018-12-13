@@ -5,15 +5,30 @@
   font-size: 3em;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
+@media screen and (max-width: 576px) {
+  .app-title {
+     font-size: 2em;
+  }
+}
 
 .app-title-small {
   font-size: 2em;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
+@media screen and (max-width: 576px) {
+  .app-title-small {
+     font-size: 1.5em;
+  }
+}
 
 .app-subtitle {
   font-size: 1.5em;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+@media screen and (max-width: 576px) {
+  .app-title {
+     font-size: 1em;
+  }
 }
 
 .app-subtitle-small {

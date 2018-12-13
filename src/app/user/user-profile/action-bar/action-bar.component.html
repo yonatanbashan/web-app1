@@ -1,9 +1,9 @@
 <div class="container-fluid">
   <div class="d-flex column">
-    <button class="btn btn-sm btn-outline-dark" (click)="onNewPost()">New post</button>
-    <button class="btn btn-sm btn-outline-dark" (click)="onEditProfile()">Edit Profile</button>
+    <button class="btn btn-sm btn-outline-dark action-bar-button action-bar-link my-1" (click)="onNewPost()">New post</button>
+    <button class="btn btn-sm btn-outline-dark action-bar-button action-bar-link" (click)="onEditProfile()">Edit Profile</button>
     <br><br>
     Following:
-    <a [routerLink]="['/user', user.username]" *ngFor="let user of followedUsers">#{{ user.username }}</a>
+    <a [routerLink]="['/user', user.username]" *ngFor="let user of followedUsers" class="action-bar-link">#{{ user.username }}</a>
   </div>
 </div>

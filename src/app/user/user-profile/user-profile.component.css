@@ -3,6 +3,11 @@
   font-weight: bolder;
   color: #3366FF;
 }
+@media screen and (max-width: 576px) {
+  .user-profile-title {
+     font-size: 1.5rem;
+  }
+}
 
 .user-profile-title:hover {
   text-decoration: underline;
@@ -12,6 +17,22 @@
   font-size: 1.2rem;
   color: rgb(26, 52, 131);
 }
+@media screen and (max-width: 576px) {
+  .user-header-text {
+     font-size: 1rem;
+  }
+}
+
+.user-header-subtext {
+  font-size: 0.9rem;
+  color: rgb(26, 52, 131);
+}
+@media screen and (max-width: 576px) {
+  .user-header-subtext {
+     font-size: 0.7rem;
+  }
+}
+
 
 .action-bar {
   border-radius: 20px;
@@ -22,6 +43,8 @@
 
 .profile-photo {
   cursor: pointer;
+  max-height: 15vh;
+  max-width: 15vw;
   transition: 0.2s;
 }
 

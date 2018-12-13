@@ -1,9 +1,9 @@
 <div class="post-item" [ngClass]="{'post-item-colored': fullDisplay}">
   <span (click)="toggleDisplay()" style="cursor: pointer;">
   <div class="row align-items-center">
-    <div class="col-1" *ngIf="userInfo.profileImagePath">
+    <div class="d-none d-md-inline col-1" *ngIf="userInfo.profileImagePath">
       <div class="row justify-content-center align-items-center">
-        <img class="user-avatar" [src]="userInfo.profileImagePath">
+        <img class="user-avatar img-responsive" [src]="userInfo.profileImagePath">
       </div>
     </div>
     <div class="col-11">
@@ -15,7 +15,7 @@
   </span>
   <div class="row">
       <span *ngIf="fullDisplay && ! isLoadingComments" style="width:100vw;">
-        <mat-card class="p-3 mx-3 my-4 post-content-bg-color shadow border" >
+        <mat-card class="p-3 mx-3 my-4 post-content post-content-bg-color shadow border" >
           <mat-card-content>
             <div class="post-text-content" [innerHtml]="post.content | newline"></div>
           </mat-card-content>
@@ -26,7 +26,7 @@
             *ngIf="canComment()"
             type="text"
             placeholder="add a comment..."
-            class="form-control new-comment-input"
+            class="form-control new-comment-input date-text"
             rows="2"
             id="content"
             name="content"
