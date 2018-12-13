@@ -1,18 +1,21 @@
 <div class="container-fluid">
   <div class="row my-5 mx-2 justify-content-center">
-    <div class="action-bar col-2 d-flex" *ngIf="!error && isMe">
+    <div class="action-bar col-12 col-md-3 col-lg-2 d-flex my-4 my-sm-0 px-0" *ngIf="!error && isMe">
       <div class="container-fluid align-items-stretch justify-content-center">
         <app-action-bar></app-action-bar>
       </div>
     </div>
 
 
-    <div class="col-10 px-5">
+    <!-- Main column: header and posts -->
+    <div class="col-12 col-md-9 col-lg-10 col-lg-offset-2 px-5">
       <div class="row">
-        <div class="col-8 offset-2">
-          <mat-card class="p-0 p-sm-5 m-0 m-sm-5 rounded shadow-lg" >
+        <div class="col-12 col-sm-8 offset-sm-2">
+
+          <!-- Profile header -->
+          <mat-card class="p-0 p-sm-2 p-lg-5 m-0 m-sm-2 m-lg-4 rounded shadow-lg" >
             <mat-card-content>
-              <div class="pt-md-5 pb-md-4 mx-auto text-center">
+              <div class="pt-sm-5 pb-sm-4 mx-auto text-center">
                 <div class="row d-flex align-items-center justify-content-center">
                   <div class="user-profile-title" *ngIf="!error">
                       #{{ username }}
@@ -40,9 +43,9 @@
                     </div>
                   </div>
                 </span>
-                <div class="row d-flex justify-content-center">
-                  <div class="col-3" *ngIf="userInfo.profileImagePath">
-                    <img class="profile-photo rounded" [src]="userInfo.profileImagePath" alt="" style="max-height: 150px; max-width: 150px;" (click)="photoViewOpen(userInfo.profileImagePath)">
+                <div class="row justify-content-center">
+                  <div class="col-9 px-0" *ngIf="userInfo.profileImagePath">
+                    <img class="profile-photo rounded" [src]="userInfo.profileImagePath" alt="" (click)="photoViewOpen(userInfo.profileImagePath)">
                   </div>
                 </div>
               </div>

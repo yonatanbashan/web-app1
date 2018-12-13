@@ -33,6 +33,8 @@ import { ActionBarComponent } from './user/user-profile/action-bar/action-bar.co
 import { UserEditComponent } from './user/user-edit/user-edit.component';
 import { FeedComponent } from './feed/feed.component';
 import { PhotoViewComponent } from './photo-view/photo-view.component';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -66,6 +68,7 @@ import { PhotoViewComponent } from './photo-view/photo-view.component';
     MatCheckboxModule,
     MatProgressSpinnerModule,
     MatDialogModule,
+    NgbCollapseModule,
     BrowserAnimationsModule,
     FontAwesomeModule
   ],

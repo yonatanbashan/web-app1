@@ -1,49 +1,61 @@
 <br><br><br>
-<div class="container">
-  <div class="text-center">
-    <div class="row app-title-small">
-      Create a new post
-    </div>
-    <div class="row app-subtitles-small">
-      Fill in the post details and publish
+
+<div class="container-fluid">
+  <div class="row m-0 m-sm-5 align-items-center">
+    <div class="col-12">
+      <mat-card class="p-0 p-sm-3" >
+        <mat-card-content>
+          <div class="row justify-content-center">
+            <div class="col-11">
+            <p class="app-title-small">
+              Create a new post
+            </p>
+            <p class="app-subtitles-small">
+              Fill in the post details and publish
+            </p>
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-11">
+              <form [formGroup]="addPostForm" (ngSubmit)="onSubmit()">
+                  <input
+                  type="text"
+                  name="title"
+                  class="form-control"
+                  placeholder="Post title"
+                  id="title"
+                  formControlName="title">
+                <span class="app-form-warning" *ngIf="!addPostForm.get('title').valid && addPostForm.get('title').touched">You must provide a post title</span>
+
+                <br>
+                  <textarea
+                  type="text"
+                  rows="8"
+                  name="content"
+                  class="form-control new-post-content"
+                  placeholder="Post content"
+                  id="content"
+                  formControlName="content"
+                  >
+                  </textarea>
+
+                  <div class="row justify-content-center">
+
+                      <button
+                      type="submit"
+                      class="btn btn-primary my-3 px-5"
+                      [disabled]="!addPostForm.valid">
+                        Post
+                      </button>
+
+                  </div>
+
+              </form>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
-  <br>
-  <form [formGroup]="addPostForm" (ngSubmit)="onSubmit()">
-    <div class="row">
-      <input
-      type="text"
-      name="title"
-      class="form-control"
-      placeholder="Post title"
-      id="title"
-      formControlName="title"
-      >
-    <span class="app-form-warning" *ngIf="!addPostForm.get('title').valid && addPostForm.get('title').touched">You must provide a post title</span>
-    </div>
-
-    <br>
-    <div class="row">
-      <textarea
-      type="text"
-      rows="8"
-      name="content"
-      class="form-control new-post-content"
-      placeholder="Post content"
-      id="content"
-      formControlName="content"
-      >
-      </textarea>
-    </div>
-    <br>
-    <div class="row">
-      <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="!addPostForm.valid">
-        Post
-      </button>
-    </div>
-  </form>
-
 </div>
+

@@ -1,9 +1,9 @@
 <div class="post-item" [ngClass]="{'post-item-colored': fullDisplay}">
   <span (click)="toggleDisplay()" style="cursor: pointer;">
   <div class="row align-items-center">
-    <div class="col-1" *ngIf="userInfo.profileImagePath">
+    <div class="d-none d-md-inline col-1" *ngIf="userInfo.profileImagePath">
       <div class="row justify-content-center align-items-center">
-        <img class="user-avatar" [src]="userInfo.profileImagePath">
+        <img class="user-avatar img-responsive" [src]="userInfo.profileImagePath">
       </div>
     </div>
     <div class="col-11">

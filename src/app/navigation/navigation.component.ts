@@ -2,6 +2,7 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-navigation',
@@ -9,6 +10,9 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent implements OnInit, OnDestroy {
+
+  faBars = faBars;
+  isNavbarCollapsed: boolean = true;
 
   constructor(private authService: AuthService,
     private router: Router) { }
@@ -26,6 +30,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.isAuthSubs.unsubscribe();
+  }
+
+  toggleCollapse() {
+    this.isNavbarCollapsed = !this.isNavbarCollapsed;
   }
 
   getActiveUserId() {
