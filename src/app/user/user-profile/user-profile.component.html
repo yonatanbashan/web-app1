@@ -17,20 +17,20 @@
             <mat-card-content>
               <div class="pt-sm-5 pb-sm-4 mx-auto text-center">
                 <div class="row d-flex align-items-center justify-content-center">
-                  <div class="user-profile-title" *ngIf="!error">
+                  <div class="user-profile-title px-2 px-sm-0" *ngIf="!error">
                       #{{ username }}
                   </div>
                 </div>
                 <span *ngIf="!isFollowed && !isMe && !pendingFollow && !isLoadingUser">
                   <div class="row justify-content-center">
-                    <div class="col-2">
+                    <div class="col-10 col-sm-12">
                       <button class="my-3 btn btn-info follow-button" (click)="followUser()">Follow</button>
                     </div>
                   </div>
                 </span>
                 <span *ngIf="isFollowed && !isMe && !pendingFollow && !isLoadingUser">
                   <div class="row justify-content-center">
-                    <div class="col-2">
+                    <div class="col-10 col-sm-12">
                       <button class="my-3 btn follow-button" (click)="unfollowUser()">Unfollow</button>
                     </div>
                   </div>
@@ -53,7 +53,7 @@
                   <div class="user-header-text" *ngIf="headerText !== ''">
                       {{ headerText }}
                   </div>
-                  <div class="app-subtitle-small" *ngIf="birthDayText !== '' && !hideDate">
+                  <div class="user-header-subtext" *ngIf="birthDayText !== '' && !hideDate">
                       Birthday: {{ birthDayText }}
                   </div>
                 </div>
