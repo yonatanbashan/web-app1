@@ -1,8 +1,9 @@
+import { CommunicationService } from './../communication.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faHome, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-navigation',
@@ -12,10 +13,15 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 export class NavigationComponent implements OnInit, OnDestroy {
 
   faBars = faBars;
+  faHome = faHome;
+  faSignOutAlt = faSignOutAlt
   isNavbarCollapsed: boolean = true;
 
-  constructor(private authService: AuthService,
-    private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private commService: CommunicationService,
+    private router: Router
+  ) { }
 
   activeUser: string = null;
   private isAuthSubs: Subscription;
@@ -26,6 +32,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
       this.activeUser = this.authService.getActiveUser();
     });
     this.authService.autoAuthUser();
+    this.isNavbarCollapsed = true;
   }
 
   ngOnDestroy() {
@@ -48,6 +55,14 @@ export class NavigationComponent implements OnInit, OnDestroy {
   logout() {
     this.authService.logout();
     this.router.navigate(['/']);
+  }
+
+  onFindClick() {
+    this.router.navigate(['/find']);
+  }
+
+  onFindInput(e: Event) {
+    this.commService.putSearchActionSubj((e.srcElement as any).value);
   }
 
 }

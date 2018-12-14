@@ -6,6 +6,8 @@ import { PostsService } from './../posts.service';
 import { Post } from '../../models/post.model';
 import { Comment } from '../../models/comment.model';
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-post-item',
@@ -14,11 +16,13 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 })
 export class PostItemComponent implements OnInit {
 
+  faTrashAlt = faTrashAlt;
+
   @Input() post: Post;
   @Input() userId: string;
   user: User;
   userInfo: any = {
-    profileImagePath: ''
+    profileImagePath: environment.s3address + environment.defaultProfileImage
   };
   fullDisplay = false;
   comments: Comment[] = [];
@@ -45,6 +49,9 @@ export class PostItemComponent implements OnInit {
     this.user = response.user;
     this.user.id = response.user._id;
     this.userInfo = this.user.userInfo;
+    if (!this.userInfo.profileImagePath || this.userInfo.profileImagePath === "null") {
+      this.userInfo.profileImagePath = environment.s3address + environment.defaultProfileImage
+    }
     this.authorText = ', by ' + this.user.username;
   }
 

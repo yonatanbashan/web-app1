@@ -9,6 +9,13 @@
   }
 }
 
+.comment-container {
+  background: rgba(77, 77, 130, 0.15);
+  transition: 0.2s;
+}
+.comment-container:hover {
+  background: rgba(170, 170, 230, 0.15);
+}
 
 .user-avatar {
   max-width: 100%;
@@ -20,6 +27,12 @@
   font-size: 1em;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+@media screen and (max-width: 576px) {
+  .comment-text-content {
+     font-size: 0.8rem;
+  }
+}
+
 
 .post-text-content {
   font-size: 1.1em;
@@ -37,21 +50,14 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.post-content {
-  max-width: 80%;
-}
-
-.post-bg-color {
-  background-color: #eaebf5;
-}
 
 .post-content-bg-color {
-  background-color: #cfd2ec;
+  background: rgba(150, 150, 220, 0.2);
   transition: 0.3s;
 }
 
 .post-content-bg-color:hover {
-  background-color: #DDDDFF;
+  background: rgba(80, 80, 220, 0.2);
 }
 
 .post-item {
@@ -79,11 +85,20 @@
   }
 }
 
+.comment-text {
+  font-size: 0.8rem;
+}
+@media screen and (max-width: 576px) {
+  .comment-text {
+     font-size: 0.7rem;
+  }
+}
+
+
 .new-comment-input {
   resize: none;
   max-height: 25rem;
   min-height: 1rem;
-  width: 60%;
 }
 
 
@@ -98,6 +113,15 @@
   font-size: 80%;
   height: 1.5rem;
   padding: 0 5px;
+}
+
+.comment-info-text {
+  font-size: 1rem;
+}
+@media screen and (max-width: 576px) {
+  .comment-info-text {
+     font-size: 0.8rem;
+  }
 }
 
 

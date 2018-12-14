@@ -10,7 +10,7 @@ import { Post } from 'src/app/models/post.model';
 import { sortPostsByDate } from 'src/app/common'
 import { AuthService } from 'src/app/auth/auth.service';
 import { dateFormat } from 'src/app/common';
-import { IRequest } from 'src/app/common/irequest';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-user-profile',
@@ -40,7 +40,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   // UserInfo-related
   isLoadingInfo: boolean = false;
   isLoadingUser: boolean = true;
-  userInfo: any = {};
+  userInfo: any = {
+    profileImagePath: environment.s3address + environment.defaultProfileImage
+  };
   birthDayText: string = '';
   hideDate: boolean = true;
   headerText: string ='';
@@ -121,6 +123,10 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       }
     } else {
       this.hideDate = true;
+    }
+
+    if(!this.userInfo.profileImagePath || this.userInfo.profileImagePath === "null") {
+      this.userInfo.profileImagePath = environment.s3address + environment.defaultProfileImage
     }
 
     this.headerText = this.userInfo.headerText;

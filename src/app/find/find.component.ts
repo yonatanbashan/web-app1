@@ -1,7 +1,8 @@
+import { CommunicationService } from './../communication.service';
 import { AuthService } from './../auth/auth.service';
 import { User } from './../models/user.model';
 import { Subscription } from 'rxjs';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { UsersService } from '../users.service';
 
 @Component({
@@ -9,22 +10,37 @@ import { UsersService } from '../users.service';
   templateUrl: './find.component.html',
   styleUrls: ['./find.component.css']
 })
-export class FindComponent implements OnInit {
+export class FindComponent implements OnInit, OnDestroy {
 
 
   @ViewChild('findInput') findInput: ElementRef;
 
   constructor(
     protected usersService: UsersService,
-    private authService: AuthService
+    private authService: AuthService,
+    private commService: CommunicationService
   ) { }
 
   users: User[] = [];
   isLoading: boolean;
   searchSubs: Subscription;
   pending: boolean[] = [];
+  searchEventSubs: Subscription;
 
   ngOnInit() {
+    this.searchEventSubs = this.commService.getSearchActionSubj().subscribe(
+      searchString => {
+        this.onSearchEvent(searchString);
+      }
+    );
+    const lastSearch = this.commService.getLastSearch();
+    if (lastSearch) {
+      this.onSearchEvent(lastSearch);
+    }
+  }
+
+  ngOnDestroy() {
+    this.searchEventSubs.unsubscribe();
   }
 
   updateUsers(users) {
@@ -42,17 +58,17 @@ export class FindComponent implements OnInit {
     this.isLoading = false;
   }
 
-  onFindInput() {
+  onSearchEvent(searchString: string) {
     if (this.searchSubs) {
       this.searchSubs.unsubscribe(); // Remove old subscriptions which didn't execute yet, since a new letter was typed
     }
-    if (this.findInput.nativeElement.value === '') {
+    if (searchString === '') {
       this.isLoading = false;
       this.users = [];
       return;
     }
     this.isLoading = true;
-    const searchName = this.findInput.nativeElement.value;
+    const searchName = searchString;
     this.searchSubs = this.usersService.getUsers(searchName)
     .subscribe((response) => {
       this.updateUsers(response);

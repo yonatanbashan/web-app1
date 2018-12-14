@@ -1,3 +1,5 @@
+import { LinkifyPipe } from './linkify.pipe';
+import { CommunicationService } from './communication.service';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { AuthService } from './auth/auth.service';
 import { NewlinePipe } from './newline.pipe';
@@ -44,6 +46,7 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
     HomeComponent,
     NewPostComponent,
     NewlinePipe,
+    LinkifyPipe,
     UserLoginComponent,
     UserSignupComponent,
     SpinnerComponent,
@@ -77,6 +80,7 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
     ConnectionService,
     AuthService,
     UsersService,
+    CommunicationService,
     MatDatepickerModule,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
     entryComponents: [
