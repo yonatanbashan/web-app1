@@ -25,7 +25,8 @@ router.post('', UserController.loginUser);
 // GET requests
 
 // Fetch single user
-router.get('/get', checkAuth, UserController.getUser);
+router.get('/get/name/:username', checkAuth, UserController.getUserByName);
+router.get('/get/id/:id', checkAuth, UserController.getUserById);
 
 // Retrieve user info
 router.get('/info', checkAuth, UserController.getUserInfo);

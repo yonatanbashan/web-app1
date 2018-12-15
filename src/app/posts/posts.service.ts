@@ -33,6 +33,10 @@ export class PostsService {
     });
   }
 
+  getPostById(id: string) {
+    return this.http.get<{message: string, post: any}>(this.serverAddress + 'api/posts/id/' + id);
+  }
+
   getUserPosts(username: string) {
     return this.http.get<{message: string, posts: any}>(this.serverAddress + 'api/posts/user/' + username, {})
     .pipe(map(this.mapPosts))

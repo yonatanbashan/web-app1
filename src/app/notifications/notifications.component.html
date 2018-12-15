@@ -1,0 +1,19 @@
+<div class="container-fluid column">
+  <div *ngIf="notifications.length > 0" class="row justify-content-center">
+      <button class="btn btn-outline-dark btn-sm my-3" (click)="onClear()">Clear</button>
+      <br>
+  </div>
+  <div class="row">
+  <div class="col-12">
+    <app-notification-item
+    [notification]="notification"
+    (click)="onClick(notification)"
+    *ngFor="let notification of notifications">
+
+    </app-notification-item>
+    <span *ngIf="empty" class="app-subtitle-small">
+      No notifications found!
+    </span>
+  </div>
+  </div>
+</div>

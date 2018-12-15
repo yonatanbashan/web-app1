@@ -1,0 +1,33 @@
+.notification-item {
+  font-weight: 500;
+  border-radius: 10px;
+  border-color: blue;
+  cursor: pointer;
+  background: rgba(77, 77, 130, 0.15);
+  transition: 0.2s;
+}
+
+.notification-item:hover {
+  background: rgba(170, 170, 230, 0.15);
+}
+
+.notification-read {
+  font-weight: 100;
+  background: rgba(255, 255, 255, 0.15);
+  transition: 0.2s;
+}
+
+.notification-read:hover {
+  background: rgba(173, 173, 173, 0.15);
+}
+
+.date-text {
+  color: #888888;
+  font-style: italic;
+  font-size: 0.8rem;
+}
+@media screen and (max-width: 576px) {
+  .date-text {
+     font-size: 0.7rem;
+  }
+}

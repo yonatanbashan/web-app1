@@ -36,6 +36,10 @@ import { UserEditComponent } from './user/user-edit/user-edit.component';
 import { FeedComponent } from './feed/feed.component';
 import { PhotoViewComponent } from './photo-view/photo-view.component';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { NotificationService } from './notification.service';
+import { PostViewComponent } from './posts/post-view/post-view.component';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { NotificationItemComponent } from './notifications/notification-item/notification-item.component';
 
 
 @NgModule({
@@ -55,7 +59,10 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
     ActionBarComponent,
     UserEditComponent,
     FeedComponent,
-    PhotoViewComponent
+    PhotoViewComponent,
+    PostViewComponent,
+    NotificationsComponent,
+    NotificationItemComponent
   ],
   imports: [
     BrowserModule,
@@ -81,10 +88,13 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
     AuthService,
     UsersService,
     CommunicationService,
+    NotificationService,
     MatDatepickerModule,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
     entryComponents: [
-      PhotoViewComponent
+      PhotoViewComponent,
+      PostViewComponent,
+      NotificationsComponent
     ],
   bootstrap: [AppComponent]
 })

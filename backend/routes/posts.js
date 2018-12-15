@@ -20,6 +20,9 @@ router.post('/new', checkAuth, PostController.addPost);
 // Retrieve all posts by specified username
 router.get('/user/:username', checkAuth, PostController.getPostsByUsername);
 
+// Get single post
+router.get('/id/:id', checkAuth, PostController.getPostById);
+
 // Retrieve all posts by current user (by ID)
 router.get('/all', checkAuth, PostController.getMyPosts);
 

@@ -31,6 +31,17 @@ exports.getMyPosts = (req, res, next) => {
   });
 };
 
+
+exports.getPostById = (req, res, next) => {
+  Post.findById(req.params.id)
+  .then(post => {
+    res.status(200).json({
+      message: 'Post fetched successfully!',
+      post: post
+    });
+  });
+}
+
 exports.getPostsByUsername = (req, res, next) => {
   // Search the user's ID, and then search posts by this ID
   User.findOne({ username: req.params.username })

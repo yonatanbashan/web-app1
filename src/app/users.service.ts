@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { NotificationService } from './notification.service';
 
 @Injectable()
 export class UsersService {
@@ -15,7 +16,7 @@ export class UsersService {
     private http: HttpClient,
     private connectionService: ConnectionService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
   ) {}
 
   private serverAddress = this.connectionService.getServerAddress();
@@ -33,13 +34,11 @@ export class UsersService {
   }
 
   getUser(username: string) {
-    const params = `username=${username}`;
-    return this.http.get(this.serverAddress + 'api/users/get/?' + params);
+    return this.http.get(this.serverAddress + 'api/users/get/name/' + username);
   }
 
   getUserById(id: string) {
-    const params = `id=${id}`;
-    return this.http.get(this.serverAddress + 'api/users/get/?' + params);
+    return this.http.get(this.serverAddress + 'api/users/get/id/' + id);
   }
 
   getUsers(name: string) {

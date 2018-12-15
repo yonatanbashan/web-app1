@@ -1,5 +1,5 @@
 import { PhotoViewComponent } from './../../photo-view/photo-view.component';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { UsersService } from 'src/app/users.service';
@@ -11,6 +11,7 @@ import { sortPostsByDate } from 'src/app/common'
 import { AuthService } from 'src/app/auth/auth.service';
 import { dateFormat } from 'src/app/common';
 import { environment } from 'src/environments/environment';
+import { NotificationService } from 'src/app/notification.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -23,6 +24,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     private usersService: UsersService,
     private postsService: PostsService,
     private authService: AuthService,
+    private notifyService: NotificationService,
     private route: ActivatedRoute,
     public dialog: MatDialog
   ) { }
@@ -36,6 +38,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   user: User;
   isMe = false;
   postsListenerSubs: Subscription;
+  notifySubs: Subscription;
 
   // UserInfo-related
   isLoadingInfo: boolean = false;
@@ -50,17 +53,23 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   pendingFollow: boolean;
   isFollowed: boolean;
+  notifyNum: number = 0;
 
   ngOnInit() {
 
+    this.notifySubs = this.notifyService.getNotificationSubject().subscribe(notifications => {
+      this.notifyNum = notifications.filter(n => !n.read).length;
+    });
 
     // Listen to changes from the posts service subject
+    this.notifyService.updateNotifications();
     this.postsListenerSubs = this.postsService.getPostUpdateListener()
     .subscribe(posts => {
       this.posts = posts.sort(sortPostsByDate);
     });
 
     this.route.params.subscribe((params) => {
+      this.notifyService.updateNotifications();
       this.isLoadingUser = true;
       this.userInfo = {};
       this.username = params['username'];
@@ -85,16 +94,26 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       this.prepareUserInfo();
       this.isLoadingInfo = false;
     });
+
+
   }
 
   ngOnDestroy() {
     this.postsListenerSubs.unsubscribe();
+    this.notifySubs.unsubscribe();
   }
 
   followUser() {
     this.pendingFollow = true;
     this.usersService.followUser(this.user.id)
     .subscribe(() => {
+      const myUsername = this.authService.getActiveUser();
+      this.notifyService.addNotification(
+        `#${myUsername} is now following you!`,
+        'follow',
+        myUsername,
+        this.user.id,
+      );
       this.isFollowed = !this.isFollowed;
       this.pendingFollow = false;
     })

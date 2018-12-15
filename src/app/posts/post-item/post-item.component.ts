@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { NotificationService } from 'src/app/notification.service';
 
 @Component({
   selector: 'app-post-item',
@@ -41,7 +42,7 @@ export class PostItemComponent implements OnInit {
   userInfo: any = {
     profileImagePath: environment.s3address + environment.defaultProfileImage
   };
-  fullDisplay = false;
+  @Input() fullDisplay;
   comments: Comment[] = [];
   isLoadingComments = false;
   authorText = '';
@@ -50,16 +51,24 @@ export class PostItemComponent implements OnInit {
   constructor(
     private postsService: PostsService,
     private usersService: UsersService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private notifyService: NotificationService,
+    ) { }
     commentForm: FormGroup;
 
 
   ngOnInit() {
+    this.user = new User();
+    this.user.followers = []; // To avoid accessing null from HTML before initializing user
+    if (this.fullDisplay) {
+      this.updateComments();
+    }
     this.commentForm = new FormGroup({
       'content': new FormControl(null, Validators.required),
     });
     this.authorText = '';
     this.usersService.getUserById(this.userId).subscribe(this.acclaimUser);
+    this.updateComments();
   }
 
   acclaimUser = (response: any) => {
@@ -96,7 +105,26 @@ export class PostItemComponent implements OnInit {
     this.postsService.addComment(comment, this.post)
     .subscribe(() => {
       this.updateComments();
+      this.sendCommentNotification(comment);
     });
+  }
+
+  sendCommentNotification(text: string) {
+    const maxStringLength = 25;
+    let shortText;
+    if(text.length > maxStringLength) {
+      shortText = text.substring(0, maxStringLength) + '...';
+    } else {
+      shortText = text;
+    }
+    const myUsername = this.authService.getActiveUser();
+    const notificationText = `#${myUsername} commented on your post '${this.post.title}': ${shortText}`;
+    this.notifyService.addNotification(
+      notificationText,
+      'comment',
+      this.post.id,
+      this.post.creatorId
+    );
   }
 
   updateComments() {
@@ -125,9 +153,11 @@ export class PostItemComponent implements OnInit {
     const myId = this.getActiveUserId();
     if (this.user === null) {
       return false;
+    } else {
+      return (this.post.creatorId === myId || this.user.followers.includes(myId));
     }
-    return (this.post.creatorId === myId || this.user.followers.includes(myId));
   }
+
 
 
 }

@@ -1,8 +1,10 @@
+import { MatDialog } from '@angular/material/dialog';
 import { UsersService } from 'src/app/users.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { sortUsersByName } from 'src/app/common/'
+import { NotificationsComponent } from 'src/app/notifications/notifications.component';
 
 @Component({
   selector: 'app-action-bar',
@@ -13,8 +15,12 @@ export class ActionBarComponent implements OnInit {
 
   constructor(
     private usersService: UsersService,
-    private router: Router) { }
+    private router: Router,
+    public dialog: MatDialog
+    ) { }
   followedUsers: User[];
+  @Input() notifyNum: number;
+  dialogRef: any;
 
   ngOnInit() {
     this.usersService.getFollowedUsers()
@@ -23,12 +29,24 @@ export class ActionBarComponent implements OnInit {
     });
   }
 
+  getNotificationText() {
+    let text = "Notifications";
+    if (this.notifyNum > 0) {
+      text += ` (${this.notifyNum})`;
+    }
+    return text;
+  }
+
   onNewPost() {
     this.router.navigate(['/new-post']);
   }
 
   onEditProfile() {
     this.router.navigate(['/user-edit']);
+  }
+
+  onNotifications() {
+    this.dialogRef = this.dialog.open(NotificationsComponent, {});
   }
 
 }
