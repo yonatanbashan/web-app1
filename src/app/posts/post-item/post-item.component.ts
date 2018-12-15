@@ -9,10 +9,27 @@ import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
+import { trigger, state, style, transition, animate } from '@angular/animations';
+
 @Component({
   selector: 'app-post-item',
   templateUrl: './post-item.component.html',
-  styleUrls: ['./post-item.component.css']
+  styleUrls: ['./post-item.component.css'],
+  animations: [
+    trigger('postItemTrigger', [
+      state('in', style({
+        opacity: 1,
+        transform: 'translateY(0%) scaleY(1)'
+      })),
+      transition('void => *', [
+        style({
+          opacity: 1,
+          transform: 'translateY(-30%) scaleY(1)'
+        }),
+        animate(200)
+      ]),
+    ])
+  ]
 })
 export class PostItemComponent implements OnInit {
 
@@ -69,10 +86,10 @@ export class PostItemComponent implements OnInit {
   }
 
   toggleDisplay() {
-    this.fullDisplay = !this.fullDisplay;
     if (this.fullDisplay) {
       this.updateComments();
     }
+    this.fullDisplay = !this.fullDisplay;
   }
 
   addComment(comment: string) {

@@ -19,19 +19,19 @@
 
 .find-item {
   border-radius: 5px;
-  padding-left: 0px;
-  padding-right: 20px;
-  border-width: 2px;
-  border-color: #dddddd;
-  border-style: solid;
-  margin: 0 0;
-  display: flex;
-  justify-content: space-between;
+  background-color: #eaebf5;
+  transition: 0.2s;
+}
+.find-item:hover {
+  background-color: #c3c5db;
 }
 
 .follow-button {
-  font-size: 80%;
-  height: 1.5rem;
-  padding: 0 30%;
+  font-size: 0.7rem;
+}
+@media screen and (max-width: 576px) {
+  .follow-button {
+     font-size: 0.6rem;
+  }
 }
 

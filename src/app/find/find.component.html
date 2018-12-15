@@ -3,29 +3,21 @@
       <br><br><br><br>
       <div class="content-center column text-center">
         <p class="app-title-small">Find Users</p>
-        <input
-        type="text"
-        name="find"
-        class="form-control user-find-input"
-        placeholder="find..."
-        (input)="onFindInput()"
-        #findInput
-        >
       </div>
       <br><hr><br>
       <span *ngIf="!isLoading" class="center-container column">
-        <div *ngFor="let user of users; let i = index"  class="col-md-6 col-md-offset-3 text-center">
-          <div class="row find-item">
-            <span class="h-margin v-margin">
+        <div *ngFor="let user of users; let i = index"  class="col-md-10 col-md-offset-1 text-center">
+          <div class="row find-item py-0 py-sm-1 my-0 my-sm-1 shadow-lg">
+            <div class="col-8">
               <a [routerLink]="['/user', user.username]">#{{ user.username }}</a>
-            </span>
-            <span class="h-margin v-margin" *ngIf="!usersService.isMe(user)">
-              <button class="btn btn-info follow-button" *ngIf="!usersService.isFollowed(user) && !pending[i]" (click)="followUser(user, i)">Follow</button>
-              <button class="btn follow-button" *ngIf="usersService.isFollowed(user) && !pending[i]" (click)="unfollowUser(user, i)">Unfollow</button>
+            </div>
+            <div class="col-4 col-md-3 offset-md-1 justify-content-center">
+              <button class="btn btn-info btn-sm follow-button" *ngIf="!usersService.isFollowed(user) && !pending[i]" (click)="followUser(user, i)">Follow</button>
+              <button class="btn btn-sm follow-button" *ngIf="usersService.isFollowed(user) && !pending[i]" (click)="unfollowUser(user, i)">Unfollow</button>
               <span *ngIf="pending[i]">
                 ...
               </span>
-            </span>
+            </div>
           </div>
         </div>
       </span>

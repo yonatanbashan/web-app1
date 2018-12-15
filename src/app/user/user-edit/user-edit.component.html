@@ -1,82 +1,100 @@
 <div class="container-fluid">
-  <div class="row m-5 align-items-center" style="height: 90vh;">
-    <div class="col-8 offset-2">
+  <div class="row align-items-center" style="height: 90vh;">
+    <div class="col-10 offset-1 col-lg-8 offset-lg-2">
       <mat-card class="user-edit-card" style="min-width: 50vw; min-height: 60vh;">
         <mat-card-content class="center-container column">
-          <span *ngIf="!isLoading">
-          <form [formGroup]="updateUserForm" (ngSubmit)="onSubmit()">
-              <p class="app-subtitle">Edit your user info</p>
-              <br>
-              <p class="app-subtitle-small">Birth date:</p>
-              <div class="row">
-                <div class="col-md-8">
-                  <input
-                    (dateInput)="dateChangedEvent($event)" (dateChange)="dateChangedEvent($event)"
-                    matInput
-                    [matDatepicker]="datePicker"
-                    placeholder="Choose a date"
-                    formControlName="date"
-                    class="form-control user-edit-input">
-                </div>
-                <div class="col-md-4">
-                  <mat-datepicker-toggle matSuffix [for]="datePicker">
-                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-                  </mat-datepicker-toggle>
-                </div>
-                <mat-datepicker #datePicker></mat-datepicker>
+          <div class="row" *ngIf="!isLoading">
+            <div class="col-12">
+              <form [formGroup]="updateUserForm" (ngSubmit)="onSubmit()">
+                  <p class="app-title-small">Edit user info</p>
+                  <br>
 
-              </div>
-              <br>
-              <mat-checkbox
-                type="checkbox"
-                formControlName="hideDate"
-                class="user-edit-checkbox"
-                name="hideDate"
-                id="hideDate"
-                color="primary"></mat-checkbox>
-              <label for="hideDate"><p class="app-subtitle-small">Hide date on profile</p></label>
+                  <div class="row">
+                    <div class="col-12">
+                      <label for="date" class="app-subtitle-small">Birth date:</label>
+                    </div>
+                  </div>
+                  <div class="row align-items-stretch">
+                    <div class="col-11">
+                      <input
+                        (dateInput)="dateChangedEvent($event)" (dateChange)="dateChangedEvent($event)"
+                        matInput
+                        [matDatepicker]="datePicker"
+                        placeholder="Choose a date"
+                        name="date"
+                        formControlName="date"
+                        class="form-control user-edit-input my-2">
+                    </div>
+                    <div class="col-1">
+                      <mat-datepicker-toggle matSuffix [for]="datePicker">
+                        <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                      </mat-datepicker-toggle>
+                    </div>
+                    <mat-datepicker #datePicker></mat-datepicker>
 
-              <br>
-              <p class="app-subtitle-small">Profile header text:</p>
-              <div class="row">
-                <input
-                  placeholder="Profile header text"
-                  name="headerText"
-                  formControlName="headerText"
-                  class="form-control user-edit-input"
-                >
-              </div>
-              <span *ngIf="!isDeletingImage; else spinner">
-              <div class="row my-2">
-                <button mat-stroked-button type="button" class="btn btn-outline-primary btn-sm mx-1" (click)="filePicker.click()">Pick Image</button>
-                <input type="file" #filePicker (change)="onImagePicked($event)" hidden>
-                <button class="btn btn-outline-dark btn-sm mx-1" type="button" (click)="onDeleteImage()">Delete Image</button>
-              </div>
-              <div class="row">
-              <div class="mx-0 px-0" *ngIf="imagePreview !== '' && imagePreview">
-                  <img
-                  [src]="imagePreview"
-                  [alt]="updateUserForm.value.title"
-                  style="max-height: 200px; max-width: 200px;"
-                  class="rounded"
-                  >
-              </div>
-              </div>
-              </span>
-              <ng-template #spinner>
-                <app-spinner></app-spinner>
-              </ng-template>
+                  </div>
+                  <mat-checkbox
+                    type="checkbox"
+                    formControlName="hideDate"
+                    class="user-edit-checkbox"
+                    name="hideDate"
+                    id="hideDate"
+                    color="primary"></mat-checkbox>
+                  <label for="hideDate"><p class="app-subtitle-small">Hide date on profile</p></label>
 
-              <br>
-              <div class="row">
-                <button
-                type="submit"
-                class="btn btn-primary app-button-margin">
-                  Update
-                </button>
-              </div>
-          </form>
-          </span>
+                  <div class="row">
+                    <div class="col-12">
+                      <label for="headerText" class="app-subtitle-small">Profile header text:</label>
+                    <input
+                      placeholder="Profile header text"
+                      name="headerText"
+                      formControlName="headerText"
+                      class="form-control user-edit-input"
+                    >
+                    </div>
+                  </div>
+
+                  <br>
+                  <div class="row">
+                    <div class="col-12">
+                      <span class="app-subtitle-small">Profile Image:</span>
+                    </div>
+                  </div>
+
+                  <div class="container-fluid row" *ngIf="!isDeletingImage; else spinner">
+                    <div class="row">
+                      <div class="col-6">
+                        <button mat-stroked-button type="button" class="btn btn-outline-primary btn-sm my-2" (click)="filePicker.click()">Pick Image</button>
+                        <input type="file" #filePicker (change)="onImagePicked($event)" hidden>
+                        <button class="btn btn-outline-dark btn-sm my-2" type="button" (click)="onDeleteImage()">Delete Image</button>
+                      </div>
+                      <div class="col-6 my-2">
+                          <div class="mx-0 px-0" *ngIf="imagePreview !== '' && imagePreview">
+                              <img
+                              [src]="imagePreview"
+                              [alt]="updateUserForm.value.title"
+                              style="max-height: 200px; max-width: 200px;"
+                              class="rounded">
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <ng-template #spinner>
+                    <app-spinner></app-spinner>
+                  </ng-template>
+
+                  <br>
+                  <div class="row">
+                    <button
+                    type="submit"
+                    class="btn btn-primary app-button-margin">
+                      Update
+                    </button>
+                  </div>
+              </form>
+            </div>
+          </div>
           <span *ngIf="isLoading">
             <app-spinner></app-spinner>
           </span>

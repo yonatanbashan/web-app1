@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { faBars, faHome, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-navigation',
@@ -40,7 +41,7 @@ export class NavigationComponent implements OnInit, OnDestroy {
   }
 
   toggleCollapse() {
-    this.isNavbarCollapsed = !this.isNavbarCollapsed;
+      this.isNavbarCollapsed = !this.isNavbarCollapsed;
   }
 
   getActiveUserId() {

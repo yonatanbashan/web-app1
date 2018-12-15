@@ -1,4 +1,4 @@
-<div class="post-item" [ngClass]="{'post-item-colored': fullDisplay}">
+<div class="post-item shadow-lg" [ngClass]="{'post-item-colored': fullDisplay}">
   <span (click)="toggleDisplay()" style="cursor: pointer;">
   <div class="row align-items-center">
     <div class="d-none d-md-inline col-1" *ngIf="userInfo.profileImagePath">
@@ -26,7 +26,7 @@
 
   </span>
   <div class="row justify-content-center">
-      <span *ngIf="fullDisplay && ! isLoadingComments" style="width:100vw;">
+      <span [@postItemTrigger]="" *ngIf="fullDisplay" style="width:100vw;">
         <div class="col-12">
           <mat-card class="p-3 mx-3 my-4 post-content-bg-color shadow" >
             <mat-card-content>
@@ -90,12 +90,12 @@
           </div>
           <br>
         </div>
+        <span *ngIf="isLoadingComments">
+            <app-spinner></app-spinner>
+        </span>
       </span>
 
   </div>
-  <span *ngIf="isLoadingComments">
-      <app-spinner></app-spinner>
-  </span>
 </div>
 <br>
 <br>
