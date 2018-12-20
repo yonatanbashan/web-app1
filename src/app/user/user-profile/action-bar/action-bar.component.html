@@ -1,8 +1,24 @@
 <div class="container-fluid">
   <div class="d-flex column">
-    <button class="btn btn-sm btn-outline-dark action-bar-button action-bar-link my-1" (click)="onNewPost()">New post</button>
-    <button class="btn btn-sm btn-outline-dark action-bar-button action-bar-link " (click)="onEditProfile()">Edit Profile</button>
-    <button class="btn btn-sm btn-outline-dark action-bar-button action-bar-link my-1" (click)="onNotifications()">{{ getNotificationText() }}</button>
+    <button title="New Post" class="btn btn-sm btn-outline-dark action-bar-link my-1" (click)="onNewPost()">
+      <div class="row justify-content-between">
+        <span class="col-8">New post</span>
+        <span class="col-4"><fa-icon [icon]="faPencilAlt"></fa-icon>
+        </span>
+      </div>
+    </button>
+    <button title="Edit Profile" class="btn btn-sm btn-outline-dark action-bar-link " (click)="onEditProfile()">
+      <div class="row justify-content-between">
+        <span class="col-8">Edit Profile</span>
+        <span class="col-4"><fa-icon [icon]="faIdCard"></fa-icon></span>
+      </div>
+    </button>
+    <button class="btn btn-sm btn-outline-dark action-bar-link my-1" (click)="onNotifications()">
+      <div class="row justify-content-between">
+          <span class="col-8">{{ getNotificationText() }}</span>
+          <span class="col-4"><fa-icon [icon]="faBell"></fa-icon></span>
+      </div>
+    </button>
     <br><br>
     Following:
     <a [routerLink]="['/user', user.username]" *ngFor="let user of followedUsers" class="action-bar-link">#{{ user.username }}</a>

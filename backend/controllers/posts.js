@@ -89,13 +89,13 @@ exports.getFeedPosts = (req, res, next) => {
     } else {
       offset = 0;
     }
-
+    console.log('Exist: ' + posts.length);
     if( (amount + offset + 1) >= posts.length) {
       posts = posts.slice(offset);
     } else {
-      posts = posts.slice(offset, amount);
+      posts = posts.slice(offset, offset + amount);
     }
-
+    console.log('Amount: ' + amount + ', Offset: ' + offset, ', Fetched: ' + posts.length);
     res.status(200).json({
       message: 'Followed posts fetched successfully',
       minPost: offset,

@@ -28,8 +28,9 @@ exports.searchUsers = (req, res, next) => {
 
 exports.getUserInfo = (req, res, next) => {
 
+  const usernameRegex = `^${req.query.username}$`;
 
-  User.findOne({ username: req.query.username })
+  User.findOne({ username: { $regex : usernameRegex, $options: "i"} })
   .then(response => {
     res.status(200).json({
       message: 'User info for username "' + req.body.username + '" was sent back successfully!',
@@ -75,9 +76,11 @@ exports.addUser = (req, res, next) => {
 exports.loginUser = (req, res, next) => {
   let foundUser;
 
+  const usernameRegex = `^${req.body.args.username}$`;
+
   // Login requests
   if (req.body.type === 'login') {
-    const query  = User.where({ username: req.body.args.username });
+    const query  = User.where({ username: { $regex : usernameRegex, $options: "i"} });
     query.findOne()
     .then(document => {
       if (!document) {
@@ -114,7 +117,7 @@ exports.loginUser = (req, res, next) => {
   // Check username existence for frontend UI
   if (req.body.type === 'check') {
 
-    const query  = User.where({ username: req.body.args.username});
+    const query  = User.where({ username: { $regex : usernameRegex, $options: "i"} });
     query.findOne().then(document => {
       res.status(200).json({
         user: document
@@ -124,7 +127,10 @@ exports.loginUser = (req, res, next) => {
 };
 
 exports.getUserByName = (req, res, next) => {
-  User.findOne( { username: req.params.username })
+
+  const usernameRegex = `^${req.params.username}$`;
+
+  User.findOne( { username: { $regex : usernameRegex, $options: "i"} } )
   .then((user) => {
     res.status(201).json({
       message: 'User fetched successfully!',

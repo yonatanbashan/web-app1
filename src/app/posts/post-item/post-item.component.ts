@@ -43,6 +43,7 @@ export class PostItemComponent implements OnInit {
     profileImagePath: environment.s3address + environment.defaultProfileImage
   };
   @Input() fullDisplay;
+  @Input() toggleDisabled = false;
   comments: Comment[] = [];
   isLoadingComments = false;
   authorText = '';
@@ -95,6 +96,9 @@ export class PostItemComponent implements OnInit {
   }
 
   toggleDisplay() {
+    if (this.toggleDisabled) {
+      return;
+    }
     if (this.fullDisplay) {
       this.updateComments();
     }

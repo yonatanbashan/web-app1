@@ -1,16 +1,18 @@
-.action-bar-button {
-
-}
 
 .action-bar-link {
-  font-size: 1rem;
+  font-size: 0.8rem;
 }
 @media screen and (max-width: 576px) {
+  .action-bar-link {
+     font-size: 0.9rem;
+  }
+}
+@media screen and (min-width: 576px) and (max-width: 768px) {
   .action-bar-link {
      font-size: 0.8rem;
   }
 }
-@media screen and (min-width: 576px) and (max-width: 768px) {
+@media screen and (min-width: 994px) {
   .action-bar-link {
      font-size: 0.9rem;
   }

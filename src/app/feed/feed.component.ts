@@ -41,6 +41,8 @@ export class FeedComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.postsSubs.unsubscribe();
+    this.posts = [];
+    this.postNum = 0;
   }
 
   @HostListener('window:scroll', ['$event']) onScroll(): void {
@@ -50,11 +52,13 @@ export class FeedComponent implements OnInit, OnDestroy {
     let pos = (document.documentElement.scrollTop || document.body.scrollTop) + document.documentElement.offsetHeight;
     let max = document.documentElement.scrollHeight;
     if(pos == max )   {
+      // console.log('a:' + this.postNum);
       if(this.allPostsLoaded) {
         return;
       }
       this.postNum = this.posts.length;
       this.isLoadingMore = true;
+      // console.log('b:' + this.postNum);
       this.postFetchSubs = this.postsService.getFeedPosts(this.amountOfPostsToLoad, this.postNum)
       .subscribe(posts => {
         if(posts.length === 0) {

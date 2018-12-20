@@ -23,12 +23,11 @@
             placeholder="Username"
             id="username"
             formControlName="username"
-            (input)="onCheckTypedUserAlreadyExists()"
-            >
+            (input)="onCheckTypedUserAlreadyExists()">
 
           </div>
           <span class="app-form-warning" *ngIf="typedUserAlreadyExists">Username already exists, please choose another username</span>
-          <span class="app-form-warning" *ngIf="!signupForm.get('username').valid && signupForm.get('username').touched">You must provide a valid username</span>
+          <span class="app-form-warning" *ngIf="!signupForm.get('username').valid && signupForm.get('username').touched">You must provide a valid username: 4-15 characters, only letters, numbers, '-' and '.' are allowed.</span>
           <span class="app-form-warning" *ngIf="(!typedUserAlreadyExists && signupForm.get('username').valid) || !signupForm.get('username').touched"><br></span>
         </div>
 

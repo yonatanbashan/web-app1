@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { sortUsersByName } from 'src/app/common/'
 import { NotificationsComponent } from 'src/app/notifications/notifications.component';
+import { faPencilAlt, faIdCard, faBell } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-action-bar',
@@ -12,6 +13,10 @@ import { NotificationsComponent } from 'src/app/notifications/notifications.comp
   styleUrls: ['./action-bar.component.css']
 })
 export class ActionBarComponent implements OnInit {
+
+  faPencilAlt = faPencilAlt;
+  faIdCard = faIdCard;
+  faBell = faBell;
 
   constructor(
     private usersService: UsersService,
@@ -46,6 +51,7 @@ export class ActionBarComponent implements OnInit {
   }
 
   onNotifications() {
+    this.notifyNum = 0;
     this.dialogRef = this.dialog.open(NotificationsComponent, {});
   }
 
