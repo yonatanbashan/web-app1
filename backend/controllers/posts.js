@@ -9,7 +9,6 @@ exports.addPost = (req, res, next) => {
     creator: req.userData.userId,
     comments: []
   });
-  console.log(req.body);
   post.save().then(createdPost => {
     res.status(201).json({
       message: 'Post added successfully',
@@ -107,7 +106,6 @@ exports.getFeedPosts = (req, res, next) => {
 
 
 exports.deletePost = (req, res, next) => {
-  //console.log(req.body);
   Comment.deleteMany( { postId: req.params.id })
   .then(() => {
     return Post.deleteOne({ _id: req.params.id });

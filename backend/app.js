@@ -1,6 +1,7 @@
 const path = require("path");
 const express = require('express');
 const bodyParser = require('body-parser');
+const appConfig = require('./common/app-config.js')
 
 const mongoose = require('mongoose');
 
@@ -13,8 +14,8 @@ const notificationsRoutes = require('./routes/notifications');
 const app = express();
 
 const mongoDbClusterUser = 'admin';
-const mongoDbClusterPass = 'wExyX8RQQaJSwn03';
 const dbName = 'blogs-db';
+const mongoDbClusterPass = appConfig.mongoDbClusterPass;
 
 const connectAddress = 'mongodb+srv://' + mongoDbClusterUser + ':' + mongoDbClusterPass + '@cluster0-saxps.mongodb.net/' + dbName + '?retryWrites=true';
 

@@ -1,9 +1,9 @@
 import { AuthService } from 'src/app/auth/auth.service';
 import { UsersService } from './../../users.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { User } from 'src/app/models/user.model';
-import { DateAdapter, MatDatepickerInputEvent } from '@angular/material';
+import { MatDatepickerInputEvent } from '@angular/material';
 import { Router } from '@angular/router';
 import { mimeType } from 'src/app/common/mime-type.validator'
 
